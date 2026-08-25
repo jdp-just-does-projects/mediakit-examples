@@ -56,6 +56,8 @@ def parse_args(argv=None) -> argparse.Namespace:
     p.add_argument("--transitions", help="comma-separated MediaKit transition ids, e.g. 1182359")
     p.add_argument("--concat-from-local", action="store_true", help="upload enhanced/*.mp4 instead of passing MediaKit URLs")
     p.add_argument("--skip-enhance", action="store_true", help="stitch the raw 480p clips (debugging)")
+    p.add_argument("--local-concat", action="store_true",
+                   help="stitch with `mediakit-cli --local editing concat-video` (ffmpeg, no MEDIAKIT_API_KEY, no transitions)")
     p.add_argument("--screenplay", help="use this screenplay.json instead of asking the LLM")
     p.add_argument("--style", help="style direction handed to the LLM")
     p.add_argument("--max-characters", type=int, default=3)
@@ -385,6 +387,16 @@ def step_concat(out: Path, state: dict, args) -> None:
         mark_done(out, state, "concat")
         log("[concat] final.mp4 already exists")
         return
+    if args.local_concat:
+        inputs = [str(out / e["enhance"]["local_path"]) for e in state["shots"]]
+        result = mediakit.concat_video_local(inputs, str(final))
+        if not final.exists():
+            raise SystemExit(f"local concat reported success but {final} is missing: {result}")
+        state["concat"] = {"mode": "local", "inputs": "local", "input_list": inputs, "completed_at": now_iso(),
+                           "duration": result.get("duration"), "resolution": result.get("resolution"), "local_path": "final.mp4"}
+        mark_done(out, state, "concat")
+        log(f"[concat] local concat -> final.mp4 ({result.get('duration')}s)")
+        return
     if cc.get("task_id") and cc.get("status") not in mediakit.FAILED_STATES:
         pass
     else:
@@ -434,9 +446,10 @@ def main(argv=None) -> int:
     out = Path(args.out or Path("runs") / f"{datetime.now().strftime('%Y%m%d-%H%M%S')}-{slug(args.idea)}")
     state = load_or_init_state(out, args)
 
-    paid_media = not args.dry_run and args.until not in ("screenplay",)
-    if paid_media:
-        log(f"[pipeline] mediakit-cli {mediakit.preflight()}")  # fail before any paid Ark call
+    reaches_mediakit = not args.dry_run and args.until not in ("screenplay", "characters", "shots")
+    if reaches_mediakit:  # fail before any paid Ark call
+        needs_key = not (args.skip_enhance and args.local_concat)
+        log(f"[pipeline] mediakit-cli {mediakit.preflight(require_key=needs_key)}")
 
     sp = step_screenplay(out, state, args)
     if args.dry_run:

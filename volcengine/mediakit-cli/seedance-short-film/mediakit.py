@@ -46,9 +46,9 @@ def _env() -> dict[str, str]:
     return env
 
 
-def preflight() -> str:
+def preflight(*, require_key: bool = True) -> str:
     """Fail fast (before any paid Ark call) if MediaKit is not usable."""
-    if not os.environ.get("MEDIAKIT_API_KEY"):
+    if require_key and not os.environ.get("MEDIAKIT_API_KEY"):
         raise SystemExit(f"MEDIAKIT_API_KEY is not set — create one at {MEDIAKIT['console']}")
     try:
         proc = subprocess.run([CLI, "version"], capture_output=True, text=True, timeout=30, env=_env())
@@ -141,6 +141,16 @@ def concat_video(videos: list[str], *, transitions: list[str] | None = None,
     if client_token:
         args += ["--client-token", client_token]
     return _task_id(_run(args, timeout=timeout))
+
+
+def concat_video_local(videos: list[str], output_path: str, *, timeout: float = 600) -> dict:
+    """Synchronous local concat (ffmpeg under the hood; no API key). Returns the flat result
+    JSON: {"video_url": <local path>, "duration": ..., "resolution": ...}."""
+    bad = [v for v in videos if "," in v]
+    if bad:
+        raise ValueError(f"--video-urls is comma-joined; these inputs contain commas: {bad}")
+    return _run(["--local", "editing", "concat-video", "--video-urls", ",".join(videos), "--output-path", output_path],
+                timeout=timeout)
 
 
 def query_task(task_id: str, *, timeout: float = 120) -> dict:

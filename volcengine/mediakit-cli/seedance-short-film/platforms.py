@@ -18,7 +18,7 @@ PLATFORMS = {
         "image_model": "dola-seedream-5-0-pro-260628",   # Seedream 5.0 Pro
         # Any chat model on the platform works; DeepSeek V4 Pro is available on
         # both sides. seed-2-0-lite-260228 is a cheaper alternative here.
-        "llm_model": "deepseek-v4-pro-260813",
+        "llm_model": "deepseek-v4-pro-260425",
     },
     "volcengine": {
         "base_url": "https://ark.cn-beijing.volces.com/api/v3",

@@ -56,7 +56,7 @@ volcengine/
 
 | Example | What it shows | Verified live |
 | --- | --- | --- |
-| [`volcengine/mediakit-cli/seedance-short-film`](volcengine/mediakit-cli/seedance-short-film) | A coherent ≥60 s short film: an LLM writes a 4-shot screenplay, Seedream renders consistent character sheets, Seedance 2.5 generates 4 × 24 s clips at 480p from them, MediaKit upscales each clip to 1080p and stitches them. Resumable, with every request body inspectable via `--dry-run`. | Not yet — offline logic and CLI schema verified; see its README |
+| [`volcengine/mediakit-cli/seedance-short-film`](volcengine/mediakit-cli/seedance-short-film) | A coherent ≥60 s short film: an LLM writes a 4-shot screenplay, Seedream renders consistent character sheets, Seedance 2.5 generates 4 × 24 s clips at 480p from them, MediaKit upscales each clip to 1080p and stitches them. Resumable, with every request body inspectable via `--dry-run`. | Ark half yes (BytePlus, 2026-08-25: LLM, Seedream, 4 × 24 s Seedance 2.5 clips); MediaKit steps pending a key — see its README |
 
 ## Conventions
 

@@ -343,8 +343,9 @@ def validate(sp: Screenplay, *, shots: int, shot_seconds: int, max_characters: i
             for ph in PLACEHOLDER_RE.findall(t):
                 if ph not in s.characters:
                     v.append(f"{tag}: placeholder {{{ph}}} is not in this shot's characters {s.characters}")
+        action_text = " ".join([w.action for w in s.timeline] + [s.camera, s.continuity] + [d.line for d in s.dialogue])
         for c in sp.characters:
-            if c.name and re.search(rf"\b{re.escape(c.name)}\b", " ".join(texts), re.IGNORECASE):
+            if c.name and re.search(rf"\b{re.escape(c.name)}\b", action_text):
                 print(f"[screenplay] warning: {tag} mentions {c.name!r} by name; use {{{c.id}}}", file=sys.stderr)
 
     all_text = " ".join(
@@ -382,7 +383,7 @@ def compose_shot_prompt(shot: Shot, sp: Screenplay) -> tuple[str, list[str]]:
         )
     if ordered:
         lines.append("Each referenced person appears exactly once in frame.")
-    lines.append(f"{shot.summary.rstrip('.')}. Location: {shot.location}, {shot.time_of_day}.")
+    lines.append(f"{shot.summary.rstrip('.')}. Location: {shot.location.rstrip('.')}, {shot.time_of_day.rstrip('.')}.")
     for w in shot.timeline:
         lines.append(f"{_window(w.start, w.end)} {sub(w.action)}")
     if shot.camera:

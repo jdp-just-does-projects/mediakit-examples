@@ -73,6 +73,9 @@ python pipeline.py --idea "A lighthouse keeper befriends a storm." --dry-run
 
 # 5. The real thing (4 shots x 24 s at 480p -> 1080p, ~96 s film)
 python pipeline.py --idea "A lighthouse keeper befriends a storm." --out runs/lighthouse
+
+# No MediaKit key yet? Ark only: raw 480p clips stitched locally by mediakit-cli --local
+python pipeline.py --idea "..." --out runs/lighthouse --skip-enhance --local-concat
 ```
 
 Progress is printed to stderr; the final summary (paths, task ids) is JSON on stdout.
@@ -105,6 +108,7 @@ Useful flags (all defaults shown):
 | `--retry-failed` | – | Resubmit shots / tasks whose last attempt failed (billed). Without it, a failed item stops the run and tells you why. |
 | `--fresh --yes` | – | Discard a non-empty `--out`. |
 | `--concat-from-local` / `--skip-enhance` | – | Upload `enhanced/*.mp4` instead of passing MediaKit URLs / stitch the raw 480p clips (debugging). |
+| `--local-concat` | – | Stitch with `mediakit-cli --local editing concat-video` (ffmpeg on your machine; no `MEDIAKIT_API_KEY`, no transitions). With `--skip-enhance` the whole run needs only Ark credentials. |
 | `--mediakit-schema` | – | Print `enhance-video` and `concat-video` `--schema` output and exit. |
 
 ## What the example sends
@@ -249,27 +253,44 @@ a retry would be a second billed generation.
 
 ## Verification status
 
-Verified **without** network (this repository):
+Verified **live** on 2026-08-25, `ARK_PLATFORM=byteplus` (Ark half only — see below):
 
-- `screenplay.validate()` / `compose_shot_prompt()` / forbidden-word lint on a fixture
-  screenplay; `--dry-run` from `--screenplay`; the resume state machine, `--retry-failed`,
-  partial re-runs (`final.mp4` deleted → only concat; `enhanced/shot_2.mp4` deleted → only that
-  upscale) — all with the Ark and MediaKit calls stubbed.
+- **LLM** (`deepseek-v4-pro-260425`, `/chat/completions`): returns the JSON schema without
+  fences; one run needed the automatic repair round (it had written "extends"). 90–150 s per
+  screenplay. The same model id also works on Volcengine (verified there too).
+- **Seedream 5.0 Pro** (`dola-seedream-5-0-pro-260628`): `size 1536x2048` honoured exactly;
+  ~5 MB PNGs; ~60–70 s per image. Stylised full-body sheets on a plain background, as prompted.
+- **Seedance 2.5** (`dreamina-seedance-2-5-260628`), `resolution 480p`, `ratio 16:9`,
+  `generate_audio true`, two `reference_image` parts per task:
+  - 4 s smoke clip: **854×480**, 24 fps, h264 + AAC, 4.04 s, 3 MB, 78 s wall, 38 830 tokens.
+  - 4 × 24 s clips submitted back-to-back: all `succeeded`, 854×480, 24 fps, h264 + AAC,
+    24.04–24.06 s, 14–18 MB each, **230 980 tokens per clip**; wall time per task 91 / 258 /
+    465 / 866 s (they queue — the run took ~15 min end to end).
+  - `ratio`/`duration` were honoured (not `adaptive`) with `reference_image` parts and the
+    linted prompts. Character identity (face, hat, coat, scar) held across all four clips.
+- Model-id probe: `dreamina-seedance-2-5-260628`, `dola-seedream-5-0-pro-260628` (BytePlus)
+  and `doubao-seedance-2-5-260628`, `doubao-seedream-5-0-pro-260628` (Volcengine) all exist.
+  `deepseek-v4-pro-260813` does **not** exist on BytePlus; `seed-2-0-lite-260228` and
+  `deepseek-v3-2-251201` do.
+
+- **`mediakit-cli --local editing concat-video`** (`--local-concat`) over the four clips: 1.2 s,
+  `final.mp4` 854×480, 96.22 s, audio kept; the flat result JSON is `{video_url, duration, resolution}`,
+  the same keys the cloud `query-task` schema declares.
+
+Verified **without** network:
+
+- `screenplay.validate()` / `compose_shot_prompt()` / forbidden-word lint on a fixture; the
+  resume state machine, `--retry-failed`, partial re-runs (`final.mp4` deleted → only concat;
+  `enhanced/shot_2.mp4` deleted → only that upscale) — with the Ark and MediaKit calls stubbed.
 - `mediakit-cli 0.2.0`: `video enhance-video --schema` and `editing concat-video --schema`
-  confirm the flags used here (`video_url, scene, tool_version, resolution, bitrate_level, fps,
-  client_token`; `video_urls, transitions, client_token`) and that a completed task reports
-  `video_url`, `duration`, `resolution`.
+  confirm the flags used here and that a completed task reports `video_url`, `duration`,
+  `resolution`.
 
-**Not yet verified against the live APIs** (taken from the docs / sibling repositories):
+**Not yet verified against the live MediaKit API** (no `MEDIAKIT_API_KEY` was available):
 
-- Seedance 2.5 at `480p` with 2–3 reference images and 24 s clips: exact output pixel
-  dimensions, wall time, and whether `generate_audio` dialogue lands in the requested windows.
-- MediaKit `enhance-video` on AIGC 480p input: output is 1920×1080, duration unchanged, and
-  the **audio track is preserved**. If it is not, the fix is a `mediakit-cli editing
+- `enhance-video` on AIGC 480p input: output is 1920×1080, duration unchanged, and the
+  **audio track is preserved**. If it is not, the fix is a `mediakit-cli editing
   mux-audio-video` step with the 480p original's audio.
-- MediaKit URL lifetime, `client_token` idempotency semantics, and `--transitions` effect on
-  duration/audio.
-- Ark chat JSON compliance of the default models; a second platform when only one was run.
-
-When you run it live, please record the platform, date, model ids, observed clip
-dimensions/durations/timings and whether audio survived the upscale in this section.
+- `concat-video` over the four enhanced URLs (and `--transitions`), MediaKit URL lifetime,
+  `client_token` idempotency semantics.
+- The Volcengine Ark side beyond the chat model and model-id probes.
