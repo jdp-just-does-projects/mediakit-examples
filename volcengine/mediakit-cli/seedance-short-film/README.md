@@ -28,28 +28,30 @@ pipeline enforces:
    continuity and audio notes, all linted for the words that would make Seedance 2.5
    reinterpret the request (see [sharp edges](#sharp-edges)).
 
-## Why this lives under `volcengine/`
+## Volcano Engine only
 
-MediaKit is a Volcengine product with a single endpoint (`https://amk.cn-beijing.volces.com`)
+AI MediaKit is a Volcano Engine product with a single endpoint (`https://amk.cn-beijing.volces.com`)
 and its own key, `MEDIAKIT_API_KEY`, from the
-[AI MediaKit console](https://console.volcengine.com/imp/ai-mediakit/settings). It has no
-BytePlus twin today, so the example is filed under Volcengine.
+[AI MediaKit console](https://console.volcengine.com/imp/ai-mediakit/settings). It is not
+available on BytePlus (the nearest thing there is video enhancement inside BytePlus VOD, a
+different API), so this example is Volcano Engine end to end: the LLM, Seedream and Seedance
+calls go to the cn-beijing ModelArk deployment with the `doubao-*` model ids in `config.py`,
+and MediaKit does the post-production. Two keys from one console:
 
-The Ark half (LLM, Seedream, Seedance) still switches platform with `ARK_PLATFORM`, exactly
-as in [seedance-examples](https://github.com/jdp-just-does-projects/seedance-examples):
-`byteplus` (ap-southeast) or `volcengine` (cn-beijing). Base URL, model ids and API key are
-per-platform and not interchangeable. Mixing `ARK_PLATFORM=byteplus` with MediaKit works —
-that is two consoles and two keys.
+| Env var | Where from |
+| --- | --- |
+| `ARK_API_KEY` | ModelArk (方舟) console — enable the three models under *开通管理* first |
+| `MEDIAKIT_API_KEY` | AI MediaKit console — *settings* |
 
 ## Files
 
 | File | Role |
 | --- | --- |
-| `platforms.py` | Per-platform Ark base URL and model ids (Seedance 2.5, Seedream 5.0 Pro, chat model) in one `PLATFORMS` dict, plus the MediaKit endpoint. |
+| `config.py` | Ark base URL and model ids (Seedance 2.5, Seedream 5.0 Pro, chat model) plus the MediaKit endpoint — all Volcano Engine. |
 | `ark.py` | Small `requests` client for `/chat/completions`, `/images/generations` and `/contents/generations/tasks` (submit + poll), with the retry policy explained below. |
 | `mediakit.py` | Subprocess wrapper around `mediakit-cli`: `enhance_video()`, `concat_video()`, `query_task()`, a shared poll loop, and lenient parsing of the CLI's stdout JSON contract. |
 | `screenplay.py` | System/user prompts for the LLM, the screenplay JSON schema and validator, one automatic repair round, and `compose_shot_prompt()` which turns a shot into a Seedance prompt with `@ImageN` bindings. |
-| `pipeline.py` | The orchestrator: argparse, `state.json`, five resumable steps, `--dry-run`, `--until`, `--retry-failed`. |
+| `pipeline.py` | The orchestrator: argparse, `state.json`, five resumable steps, `--dry-run`, `--until`, `--retry-failed`, `--local-concat`. |
 | `requirements.txt` | `requests`. `mediakit-cli` (Node) is an external tool. |
 
 ## Run it
@@ -63,8 +65,7 @@ mediakit-cli version
 pip install -r requirements.txt
 
 # 3. Credentials
-export ARK_PLATFORM=byteplus        # or: volcengine
-export ARK_API_KEY=...              # ModelArk key from that platform's console
+export ARK_API_KEY=...              # Volcano Engine ModelArk key
 export MEDIAKIT_API_KEY=...         # https://console.volcengine.com/imp/ai-mediakit/settings
 mediakit-cli doctor                 # cloud_ready should be true
 
@@ -120,7 +121,7 @@ Useful flags (all defaults shown):
 
 | Field | Value | Note |
 | --- | --- | --- |
-| `model` | `dreamina-seedance-2-5-260628` / `doubao-seedance-2-5-260628` | by `ARK_PLATFORM` |
+| `model` | `doubao-seedance-2-5-260628` | `config.py` |
 | `content[0]` | `{"type": "text", "text": <composed prompt>}` | see below |
 | `content[1..]` | `{"type": "image_url", "image_url": {"url": …}, "role": "reference_image"}` | one per character in the shot, in `@ImageN` order |
 | `ratio` | `16:9` | |
@@ -170,8 +171,8 @@ mediakit-cli shared query-task --task-id <task_id>
 ```
 
 - `enhance-video` gets the **local** 480p file. The CLI uploads it (`mediakit://…` file id,
-  cached by path + size + mtime for 30 days), which sidesteps the 24 h Ark URL expiry and any
-  cross-region fetch of a BytePlus URL from cn-beijing. Resumes do not re-upload.
+  cached by path + size + mtime for 30 days), which sidesteps the 24 h Ark URL expiry and lets
+  resumes work from local files without re-uploading.
 - `concat-video` gets the four **MediaKit URLs** returned by the enhance tasks — same cloud,
   no re-upload. `--concat-from-local` uploads the local files instead.
 - The pipeline runs its own poll loop over `query-task` (every 15 s, all tasks per tick) so it
@@ -248,49 +249,48 @@ a retry would be a second billed generation.
    override it.
 9. **Ark JSON mode is not relied on.** The LLM is asked for "JSON only" and the response is
    parsed leniently (fences and surrounding prose are stripped).
-10. **Models may need activating** in the ModelArk console (Volcengine in particular) before the
-    first call returns anything but `InvalidEndpointOrModel.NotFound`.
+10. **Models may need activating** in the ModelArk console (开通管理) before the first call
+    returns anything but `InvalidEndpointOrModel.NotFound`.
 
 ## Verification status
 
-Verified **live** on 2026-08-25, `ARK_PLATFORM=byteplus` (Ark half only — see below):
+Verified **live** on Volcano Engine, 2026-08-25 (Ark half + local concat — see below for what
+is still pending):
 
 - **LLM** (`deepseek-v4-pro-260425`, `/chat/completions`): returns the JSON schema without
   fences; one run needed the automatic repair round (it had written "extends"). 90–150 s per
-  screenplay. The same model id also works on Volcengine (verified there too).
-- **Seedream 5.0 Pro** (`dola-seedream-5-0-pro-260628`): `size 1536x2048` honoured exactly;
-  ~5 MB PNGs; ~60–70 s per image. Stylised full-body sheets on a plain background, as prompted.
-- **Seedance 2.5** (`dreamina-seedance-2-5-260628`), `resolution 480p`, `ratio 16:9`,
-  `generate_audio true`, two `reference_image` parts per task:
-  - 4 s smoke clip: **854×480**, 24 fps, h264 + AAC, 4.04 s, 3 MB, 78 s wall, 38 830 tokens.
-  - 4 × 24 s clips submitted back-to-back: all `succeeded`, 854×480, 24 fps, h264 + AAC,
-    24.04–24.06 s, 14–18 MB each, **230 980 tokens per clip**; wall time per task 91 / 258 /
-    465 / 866 s (they queue — the run took ~15 min end to end).
-  - `ratio`/`duration` were honoured (not `adaptive`) with `reference_image` parts and the
-    linted prompts. Character identity (face, hat, coat, scar) held across all four clips.
-- Model-id probe: `dreamina-seedance-2-5-260628`, `dola-seedream-5-0-pro-260628` (BytePlus)
-  and `doubao-seedance-2-5-260628`, `doubao-seedream-5-0-pro-260628` (Volcengine) all exist.
-  `deepseek-v4-pro-260813` does **not** exist on BytePlus; `seed-2-0-lite-260228` and
-  `deepseek-v3-2-251201` do.
-
-- **`mediakit-cli --local editing concat-video`** (`--local-concat`) over the four clips: 1.2 s,
-  `final.mp4` 854×480, 96.22 s, audio kept; the flat result JSON is `{video_url, duration, resolution}`,
-  the same keys the cloud `query-task` schema declares.
+  screenplay including the repair.
+- **Seedream 5.0 Pro** (`doubao-seedream-5-0-pro-260628`): `size 1536x2048` honoured exactly;
+  4.5–5.5 MB PNGs; ~60–70 s per image. Stylised full-body sheets on a plain background.
+- **Seedance 2.5** (`doubao-seedance-2-5-260628`), `resolution 480p`, `ratio 16:9`,
+  `generate_audio true`, 1–2 `reference_image` parts per task, 4 × 24 s clips submitted
+  back-to-back: all `succeeded` — **854×480**, 24 fps, h264 + AAC, 24.06 s, 12–17 MB each,
+  **230 980 tokens per clip**, 161–215 s wall per task (all four done ~4 min after submit).
+  `ratio`/`duration` were honoured (not `adaptive`) with `reference_image` parts and the
+  linted prompts; character identity (face, hair, glasses, pendant, coat) held across all four
+  clips. A 4 s clip costs 38 830 tokens and ~80 s, which makes
+  `--shots 1 --shot-seconds 4 --until shots` a cheap pre-flight.
+- **`mediakit-cli --local editing concat-video`** (`--local-concat`, v0.2.0) over the four
+  clips: ~1 s, `final.mp4` 854×480, 96.29 s, audio kept; the flat result JSON is
+  `{video_url, duration, resolution}` — the same keys the cloud `query-task` schema declares.
 
 Verified **without** network:
 
 - `screenplay.validate()` / `compose_shot_prompt()` / forbidden-word lint on a fixture; the
   resume state machine, `--retry-failed`, partial re-runs (`final.mp4` deleted → only concat;
   `enhanced/shot_2.mp4` deleted → only that upscale) — with the Ark and MediaKit calls stubbed.
-- `mediakit-cli 0.2.0`: `video enhance-video --schema` and `editing concat-video --schema`
-  confirm the flags used here and that a completed task reports `video_url`, `duration`,
-  `resolution`.
+- `mediakit-cli video enhance-video --schema` / `editing concat-video --schema` confirm the
+  flags used here and that a completed task reports `video_url`, `duration`, `resolution`.
 
-**Not yet verified against the live MediaKit API** (no `MEDIAKIT_API_KEY` was available):
+**Not yet verified against the live MediaKit cloud API** (no `MEDIAKIT_API_KEY` was available
+when this was written):
 
 - `enhance-video` on AIGC 480p input: output is 1920×1080, duration unchanged, and the
   **audio track is preserved**. If it is not, the fix is a `mediakit-cli editing
   mux-audio-video` step with the 480p original's audio.
-- `concat-video` over the four enhanced URLs (and `--transitions`), MediaKit URL lifetime,
-  `client_token` idempotency semantics.
-- The Volcengine Ark side beyond the chat model and model-id probes.
+- Cloud `concat-video` over the four enhanced URLs (and `--transitions`), MediaKit URL
+  lifetime, `client_token` idempotency semantics.
+
+To finish the verification: export `MEDIAKIT_API_KEY`, delete `runs/<run>/final.mp4`, and
+re-run the same `pipeline.py` command without `--skip-enhance --local-concat`; only the
+enhance and cloud-concat steps will execute.

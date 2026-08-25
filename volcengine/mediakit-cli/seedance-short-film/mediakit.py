@@ -21,7 +21,7 @@ import sys
 import time
 from typing import Any, Callable
 
-from platforms import MEDIAKIT
+from config import MEDIAKIT
 
 CLI = os.environ.get("MEDIAKIT_CLI", "mediakit-cli")
 FAILED_STATES = {"failed", "canceled", "cancelled"}

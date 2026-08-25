@@ -1,8 +1,7 @@
 """Idea -> screenplay -> character sheets -> Seedance 2.5 clips -> MediaKit upscale -> MediaKit stitch.
 
-    export ARK_PLATFORM=byteplus          # or: volcengine  (Seedance / Seedream / LLM)
-    export ARK_API_KEY=...                # that platform's ModelArk key
-    export MEDIAKIT_API_KEY=...           # Volcengine AI MediaKit key (upscale + concat)
+    export ARK_API_KEY=...                # Volcano Engine ModelArk key (LLM / Seedream / Seedance)
+    export MEDIAKIT_API_KEY=...           # Volcano Engine AI MediaKit key (upscale + concat)
     python pipeline.py --idea "A lighthouse keeper befriends a storm." --dry-run
     python pipeline.py --idea "A lighthouse keeper befriends a storm."
 
@@ -116,8 +115,6 @@ def load_or_init_state(out: Path, args) -> dict:
         state = json.loads(path.read_text())
         if state.get("version") != STATE_VERSION:
             raise SystemExit(f"{path} has state version {state.get('version')}, expected {STATE_VERSION}")
-        if state.get("ark_platform") != ark.PLATFORM:
-            raise SystemExit(f"run was started on ARK_PLATFORM={state.get('ark_platform')}, now {ark.PLATFORM}")
         stale = {k: (state["config"].get(k), v) for k, v in config_of(args).items()
                  if k in ("shots", "shot_seconds", "ratio", "seedance_resolution", "generate_audio")
                  and state["config"].get(k) != v}
@@ -128,7 +125,7 @@ def load_or_init_state(out: Path, args) -> dict:
         return state
     run_id = f"{datetime.now().strftime('%Y%m%d-%H%M%S')}-{slug(args.idea)[:20]}"
     state = {
-        "version": STATE_VERSION, "run_id": run_id, "created_at": now_iso(), "ark_platform": ark.PLATFORM,
+        "version": STATE_VERSION, "run_id": run_id, "created_at": now_iso(), "ark_base_url": ark.BASE_URL,
         "models": {"video": ark.VIDEO_MODEL, "image": ark.IMAGE_MODEL, "llm": ark.LLM_MODEL},
         "config": config_of(args), "idea": args.idea, "screenplay_path": "screenplay.json",
         "characters": {}, "shots": [], "concat": {}, "steps_done": [],

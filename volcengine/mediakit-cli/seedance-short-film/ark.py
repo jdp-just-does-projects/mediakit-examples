@@ -7,8 +7,7 @@
 
 Configuration is read from the environment at import time:
 
-    export ARK_PLATFORM=byteplus     # or: volcengine
-    export ARK_API_KEY=...           # from that platform's console; not interchangeable
+    export ARK_API_KEY=...           # Volcano Engine ModelArk key (console.volcengine.com/ark)
     export ARK_LLM_MODEL=...         # optional: override the chat model id only
 
 Retry policy (lifted from creative-storyboard's renderer): retry only on 429,
@@ -28,16 +27,12 @@ from typing import Any, Callable
 
 import requests
 
-from platforms import PLATFORMS
+import config
 
-PLATFORM = os.environ.get("ARK_PLATFORM", "byteplus")
-if PLATFORM not in PLATFORMS:
-    raise SystemExit(f"ARK_PLATFORM must be one of {sorted(PLATFORMS)}, got {PLATFORM!r}")
-
-BASE_URL = PLATFORMS[PLATFORM]["base_url"]
-VIDEO_MODEL = PLATFORMS[PLATFORM]["video_model"]
-IMAGE_MODEL = PLATFORMS[PLATFORM]["image_model"]
-LLM_MODEL = os.environ.get("ARK_LLM_MODEL") or PLATFORMS[PLATFORM]["llm_model"]
+BASE_URL = config.ARK_BASE_URL
+VIDEO_MODEL = config.VIDEO_MODEL
+IMAGE_MODEL = config.IMAGE_MODEL
+LLM_MODEL = os.environ.get("ARK_LLM_MODEL") or config.LLM_MODEL
 
 TERMINAL = {"succeeded", "failed", "expired", "cancelled"}
 RETRYABLE_STATUS = {429, 500, 502, 503, 504}
@@ -58,7 +53,7 @@ def _api_key() -> str:
     try:
         return os.environ["ARK_API_KEY"]
     except KeyError:
-        raise SystemExit("ARK_API_KEY is not set (get one from the ModelArk console of ARK_PLATFORM)")
+        raise SystemExit("ARK_API_KEY is not set (get one from the Volcano Engine ModelArk console)")
 
 
 def _headers() -> dict[str, str]:
