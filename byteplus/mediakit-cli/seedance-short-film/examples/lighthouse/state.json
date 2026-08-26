@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "run_id": "20260826-023102-a-lighthouse-keeper-",
+  "created_at": "2026-08-26T02:31:02+00:00",
+  "ark_base_url": "https://ark.ap-southeast.bytepluses.com/api/v3",
+  "mediakit_endpoint": "https://mediakit.ap-southeast-1.bytepluses.com",
+  "models": {
+    "video": "dreamina-seedance-2-5-260628",
+    "image": "dola-seedream-5-0-pro-260628",
+    "llm": "deepseek-v4-pro-260425"
+  },
+  "config": {
+    "shots": 4,
+    "shot_seconds": 24,
+    "ratio": "16:9",
+    "seedance_resolution": "480p",
+    "enhance_resolution": "1080p",
+    "enhance_scene": "aigc",
+    "enhance_tool_version": "standard",
+    "bitrate_level": "medium",
+    "generate_audio": true
+  },
+  "idea": "A lighthouse keeper befriends a living storm.",
+  "screenplay_path": "screenplay.json",
+  "characters": {
+    "hero": {
+      "prompt": "A painterly, hand-crafted animation style reminiscent of watercolor and ink. The palette is moody: deep blues, grays, and muted golds, with splashes of electric blue for the storm. Soft, diffused lighting with dramatic chiaroscuro. The lighthouse beam cuts through mist. Textures are rough, like cold-pressed paper. Camera moves are slow and fluid, with occasional handheld shakiness during storm sequences. Era is timeless, early 20th-century maritime. Full-body character reference sheet of Elias: A sturdy lighthouse keeper in his 50s, with weathered skin, grey-streaked beard, and kind, deep-set eyes. Wearing Heavy oilskin coat over a wool sweater, trousers, boots, and a knitted cap. A bright red scarf always around his neck. Standing, neutral pose, facing camera, arms relaxed, plain seamless studio background, even soft light, single person, whole body in frame, no text, no logo.",
+      "url": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dola-seedream-5-0-pro/1044589ea9a55d86b92b0b7749409eeedd2636172096117787120/Image/3000087581/0217877116902716362ddeee9049477b0b29b68d55a9ae9854401.png",
+      "url_issued_at": 1787711767.295925,
+      "local_path": "characters/hero.png"
+    },
+    "storm": {
+      "prompt": "A painterly, hand-crafted animation style reminiscent of watercolor and ink. The palette is moody: deep blues, grays, and muted golds, with splashes of electric blue for the storm. Soft, diffused lighting with dramatic chiaroscuro. The lighthouse beam cuts through mist. Textures are rough, like cold-pressed paper. Camera moves are slow and fluid, with occasional handheld shakiness during storm sequences. Era is timeless, early 20th-century maritime. Full-body character reference sheet of Tempest: A sentient storm entity, a swirling mass of dark clouds, rain, and lightning, with two glowing electric-blue eyes. Wearing Its form is ever-shifting storm clouds and lightning; no garments. Its piercing blue eyes that glow within the clouds. Standing, neutral pose, facing camera, arms relaxed, plain seamless studio background, even soft light, single person, whole body in frame, no text, no logo.",
+      "url": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dola-seedream-5-0-pro/0d0f2617abbe3fdcfef9f8189bdf7645729e3e348767117787120/Image/3000087581/021787711767843e3e9275467fdb9818f9fefcdf3ebba7162f0d0.png",
+      "url_issued_at": 1787711845.88245,
+      "local_path": "characters/storm.png"
+    }
+  },
+  "shots": [
+    {
+      "index": 1,
+      "duration": 24,
+      "reference_ids": [
+        "hero"
+      ],
+      "seedance": {
+        "task_id": "cgt-20260826103726-qpt49",
+        "submitted_at": "2026-08-26T02:37:29+00:00",
+        "status": "succeeded",
+        "attempt": 1,
+        "video_url": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dreamina-seedance-2-5/3000087581/Video/94tpq-62730162806202-tgc_fed6542d4b8a0cffff00000000000000000000841948117787120/cgt-20260826103726-qpt49.mp4",
+        "video_url_at": 1787712168.5473354,
+        "local_path": "shots/shot_1.mp4"
+      },
+      "enhance": {
+        "task_id": "amk-tool-enhance-video-829455536145",
+        "client_token": "20260826-023102-a-lighthouse-keeper--enh-1",
+        "submitted_at": "2026-08-26T02:50:19+00:00",
+        "status": "completed",
+        "attempt": 1,
+        "source": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dreamina-seedance-2-5/3000087581/Video/94tpq-62730162806202-tgc_fed6542d4b8a0cffff00000000000000000000841948117787120/cgt-20260826103726-qpt49.mp4",
+        "video_url": "https://3004224010-amk-3000087581-default-688060.vod.ap-southeast-1.byteplusvod.com/75b4f53a5a364981b8102f46e5b82376",
+        "completed_at": "2026-08-26T02:57:47+00:00",
+        "duration": 24.065,
+        "resolution": "1080p",
+        "local_path": "enhanced/shot_1.mp4"
+      }
+    },
+    {
+      "index": 2,
+      "duration": 24,
+      "reference_ids": [
+        "hero",
+        "storm"
+      ],
+      "seedance": {
+        "task_id": "cgt-20260826103729-l6rcx",
+        "submitted_at": "2026-08-26T02:37:32+00:00",
+        "status": "succeeded",
+        "attempt": 1,
+        "video_url": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dreamina-seedance-2-5/3000087581/Video/xcr6l-92730162806202-tgc_8208ea5e4b8a0cffff00000000000000000000240258117787120/cgt-20260826103729-l6rcx.mp4",
+        "video_url_at": 1787712084.979537,
+        "local_path": "shots/shot_2.mp4"
+      },
+      "enhance": {
+        "task_id": "amk-tool-enhance-video-829455536401",
+        "client_token": "20260826-023102-a-lighthouse-keeper--enh-2",
+        "submitted_at": "2026-08-26T02:50:19+00:00",
+        "status": "completed",
+        "attempt": 1,
+        "source": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dreamina-seedance-2-5/3000087581/Video/xcr6l-92730162806202-tgc_8208ea5e4b8a0cffff00000000000000000000240258117787120/cgt-20260826103729-l6rcx.mp4",
+        "video_url": "https://3004224010-amk-3000087581-default-688060.vod.ap-southeast-1.byteplusvod.com/e6ddc41af2c4484fba6be12701021dd3",
+        "completed_at": "2026-08-26T02:57:41+00:00",
+        "duration": 24.065,
+        "resolution": "1080p",
+        "local_path": "enhanced/shot_2.mp4"
+      }
+    },
+    {
+      "index": 3,
+      "duration": 24,
+      "reference_ids": [
+        "hero",
+        "storm"
+      ],
+      "seedance": {
+        "task_id": "cgt-20260826103732-5wsn9",
+        "submitted_at": "2026-08-26T02:37:35+00:00",
+        "status": "succeeded",
+        "attempt": 1,
+        "video_url": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dreamina-seedance-2-5/3000087581/Video/9nsw5-23730162806202-tgc_a19611dcc88a0cffff00000000000000000000302749117787120/cgt-20260826103732-5wsn9.mp4",
+        "video_url_at": 1787712152.3968916,
+        "local_path": "shots/shot_3.mp4"
+      },
+      "enhance": {
+        "task_id": "amk-tool-enhance-video-746588330513",
+        "client_token": "20260826-023102-a-lighthouse-keeper--enh-3",
+        "submitted_at": "2026-08-26T02:50:20+00:00",
+        "status": "completed",
+        "attempt": 1,
+        "source": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dreamina-seedance-2-5/3000087581/Video/9nsw5-23730162806202-tgc_a19611dcc88a0cffff00000000000000000000302749117787120/cgt-20260826103732-5wsn9.mp4",
+        "video_url": "https://3004224010-amk-3000087581-default-688060.vod.ap-southeast-1.byteplusvod.com/3935b0162ad940c9aec40834b5399e57",
+        "completed_at": "2026-08-26T02:57:44+00:00",
+        "duration": 24.065,
+        "resolution": "1080p",
+        "local_path": "enhanced/shot_3.mp4"
+      }
+    },
+    {
+      "index": 4,
+      "duration": 24,
+      "reference_ids": [
+        "hero",
+        "storm"
+      ],
+      "seedance": {
+        "task_id": "cgt-20260826103735-rl854",
+        "submitted_at": "2026-08-26T02:37:38+00:00",
+        "status": "succeeded",
+        "attempt": 1,
+        "video_url": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dreamina-seedance-2-5/3000087581/Video/458lr-53730162806202-tgc_b9a60fb23b8a0cffff00000000000000000000276858117787120/cgt-20260826103735-rl854.mp4",
+        "video_url_at": 1787712605.244312,
+        "local_path": "shots/shot_4.mp4"
+      },
+      "enhance": {
+        "task_id": "amk-tool-enhance-video-608686258705",
+        "client_token": "20260826-023102-a-lighthouse-keeper--enh-4",
+        "submitted_at": "2026-08-26T02:50:20+00:00",
+        "status": "completed",
+        "attempt": 1,
+        "source": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dreamina-seedance-2-5/3000087581/Video/458lr-53730162806202-tgc_b9a60fb23b8a0cffff00000000000000000000276858117787120/cgt-20260826103735-rl854.mp4",
+        "video_url": "https://3004224010-amk-3000087581-default-688060.vod.ap-southeast-1.byteplusvod.com/e187be72a2dd4e80a967c5e9a85456a2",
+        "completed_at": "2026-08-26T02:57:48+00:00",
+        "duration": 24.042,
+        "resolution": "1080p",
+        "local_path": "enhanced/shot_4.mp4"
+      }
+    }
+  ],
+  "concat": {
+    "mode": "local",
+    "input_list": [
+      "runs/lighthouse/enhanced/shot_1.mp4",
+      "runs/lighthouse/enhanced/shot_2.mp4",
+      "runs/lighthouse/enhanced/shot_3.mp4",
+      "runs/lighthouse/enhanced/shot_4.mp4"
+    ],
+    "completed_at": "2026-08-26T03:00:00+00:00",
+    "duration": 96.280111,
+    "resolution": "1080p",
+    "local_path": "final.mp4"
+  },
+  "steps_done": [
+    "screenplay",
+    "characters",
+    "shots",
+    "enhance",
+    "concat"
+  ],
+  "title": "The Keeper and the Storm"
+}

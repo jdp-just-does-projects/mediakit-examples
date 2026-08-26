@@ -1,0 +1,31 @@
+{
+  "model": "dreamina-seedance-2-5-260628",
+  "content": [
+    {
+      "type": "text",
+      "text": "@Image1 is Elias: A sturdy lighthouse keeper in his 50s, with weathered skin, grey-streaked beard, and kind, deep-set eyes, wearing Heavy oilskin coat over a wool sweater, trousers, boots, and a knitted cap; A bright red scarf always around his neck. Keep this exact face, hair and outfit.\n@Image2 is Tempest: A sentient storm entity, a swirling mass of dark clouds, rain, and lightning, with two glowing electric-blue eyes, wearing Its form is ever-shifting storm clouds and lightning; no garments; Its piercing blue eyes that glow within the clouds. Keep this exact face, hair and outfit.\nEach referenced person appears exactly once in frame.\nThe keeper offers a small light to the storm, and they form a bond. Location: Exterior lighthouse gallery, Night, storm calming.\n[0s–8s] The @Image2 retracts its tendrils, eyes softening. @Image1 pulls out a small glowing lantern from his coat. Camera slowly zooms in on the lantern.\n[8s–16s] He holds the lantern high; the @Image2 mimics, forming a spiral of clouds around the light. Camera pulls back to show both lights dancing together.\n[16s–24s] The @Image2 speaks gently; @Image1 smiles, tears mixing with rain. Camera does a slow 360-degree orbit around them, lighthouse beam cutting mist.\nCamera: Smooth Steadicam, wide-angle, slow orbits.\nContinuity: Night, hero still wet, storm's eyes now soft blue, small lantern introduced, lighthouse beam still rotating.\nAudio: Wind dying, gentle rain, soft piano melody, distant thunder as lullaby. Dialogue: [5s–9s] @Image2 says \"You share your light with me.\" (A rumbling, echoing voice like distant thunder, capable of softening to a whisper.); [14s–18s] @Image1 says \"And you, your wild heart.\" (Deep and gravelly, with a soft, warm tone.). No subtitles or on-screen text.\nStyle: A painterly, hand-crafted animation style reminiscent of watercolor and ink. The palette is moody: deep blues, grays, and muted golds, with splashes of electric blue for the storm. Soft, diffused lighting with dramatic chiaroscuro. The lighthouse beam cuts through mist. Textures are rough, like cold-pressed paper. Camera moves are slow and fluid, with occasional handheld shakiness during storm sequences. Era is timeless, early 20th-century maritime."
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dola-seedream-5-0-pro/1044589ea9a55d86b92b0b7749409eeedd2636172096117787120/Image/3000087581/0217877116902716362ddeee9049477b0b29b68d55a9ae9854401.png"
+      },
+      "role": "reference_image"
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dola-seedream-5-0-pro/0d0f2617abbe3fdcfef9f8189bdf7645729e3e348767117787120/Image/3000087581/021787711767843e3e9275467fdb9818f9fefcdf3ebba7162f0d0.png"
+      },
+      "role": "reference_image"
+    }
+  ],
+  "ratio": "16:9",
+  "duration": 24,
+  "resolution": "480p",
+  "generate_audio": true,
+  "omni_reference_task_type": "auto",
+  "output_format": "mp4",
+  "watermark": false,
+  "execution_expires_after": 3600
+}

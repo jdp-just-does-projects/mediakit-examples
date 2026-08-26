@@ -1,8 +1,9 @@
 # mediakit-examples
 
-Runnable examples for **AI MediaKit** — Volcano Engine's cloud media-processing service — used
-as the post-production stage behind ByteDance's generative models (Seedance, Seedream). Each
-example is self-contained, with its own README and `requirements.txt`.
+Runnable examples for **AI MediaKit** — ByteDance's cloud media-processing service, offered on
+Volcano Engine (mainland China) and on BytePlus (international) — used as the post-production
+stage behind ByteDance's generative models (Seedance, Seedream). Each example is self-contained,
+with its own README and `requirements.txt`.
 
 ## What is MediaKit?
 
@@ -14,32 +15,39 @@ official surface is the **`mediakit-cli`** command-line tool
 
 ```
 npx @volcengine/mediakit-cli install -y
-export MEDIAKIT_API_KEY=...        # https://console.volcengine.com/imp/ai-mediakit/settings
-mediakit-cli --cloud video enhance-video --video-url in.mp4 --resolution 1080p
+export MEDIAKIT_API_KEY=...        # from the AI MediaKit console of the cloud you use
+mediakit-cli --cloud video enhance-video --video-url https://.../in.mp4 --resolution 1080p
 mediakit-cli shared query-task --task-id <id> --poll-complete
 ```
 
 Cloud tools are asynchronous (submit → `task_id` → `query-task`); results come back as URLs.
-Local files passed to a cloud tool are uploaded by the CLI. A subset of editing tools can
-also run locally on ffmpeg (`--local`), with no key.
+A subset of editing tools can also run locally on ffmpeg (`--local`), with no key. The same
+CLI talks to either cloud: its default endpoint is Volcano Engine, and `MEDIAKIT_ENDPOINT`
+points it at BytePlus.
 
-## Volcano Engine only
+## Two clouds, one CLI, different tool sets
 
 ByteDance runs two separate cloud businesses — **Volcano Engine (火山引擎)** for mainland China
-and **BytePlus** internationally — and MediaKit exists only on the first:
+and **BytePlus** internationally — and AI MediaKit exists on both, with the same API shape
+(`POST /api/v1/tools/<tool>`, `GET /api/v1/tasks/{id}`, `Authorization: Bearer <key>`) but
+different endpoints, consoles, keys and — importantly — different enabled tools:
 
 | | Volcano Engine (火山引擎) | BytePlus |
 | --- | --- | --- |
-| AI MediaKit (API key + `mediakit-cli`) | Yes — `https://amk.cn-beijing.volces.com` | **No.** Not in the console; `mediakit-cli` has no BytePlus endpoint. |
-| Closest equivalent | — | Video enhancement inside [BytePlus VOD (vCube)](https://docs.byteplus.com/en/docs/byteplus-vod/docs-video-enhancement): a VOD space, an enhancement template and an AK/SK-signed OpenAPI — a different integration, not a config switch. |
+| MediaKit endpoint | `https://amk.cn-beijing.volces.com` (the CLI default) | `https://mediakit.ap-southeast-1.bytepluses.com` (`MEDIAKIT_ENDPOINT`) |
+| MediaKit key | [console.volcengine.com/imp/ai-mediakit/settings](https://console.volcengine.com/imp/ai-mediakit/settings) | [BytePlus VOD console → AI MediaKit → Settings → API key](https://console.byteplus.com/vodpaas/region:vodpaas+ap-southeast-1/ai-mediakit/settings?tab=apiKey) |
+| `video enhance-video` | Yes | Yes |
+| `editing concat-video` (cloud stitch) | Yes | **No** — `AccessDenied: tool concat-video is not available`; stitch locally with `mediakit-cli --local` (ffmpeg) |
+| Local file → cloud tool (CLI upload) | Yes (`mediakit://` ids, cached 30 d) | **No** — `tool request-media-upload-url is not available`; inputs must be public HTTPS URLs that answer `HEAD` |
+| Docs | [volcengine.com/docs](https://www.volcengine.com/product/ai-mediakit) | [docs.byteplus.com → BytePlus VOD → AI MediaKit](https://docs.byteplus.com/en/docs/byteplus-vod/ai-mediakit-video-quality-enhancement) |
 | ModelArk (Seedance / Seedream / LLMs) | `https://ark.cn-beijing.volces.com/api/v3`, `doubao-*` model ids | `https://ark.ap-southeast.bytepluses.com/api/v3`, `dreamina-*` / `dola-*` model ids |
 
-Because the MediaKit half has to be Volcano Engine, every example here is Volcano Engine
-end to end — one account, one console, two keys (`ARK_API_KEY` for ModelArk,
-`MEDIAKIT_API_KEY` for MediaKit). BytePlus ModelArk speaks the same Ark API, and earlier
-revisions of this repo supported it behind an `ARK_PLATFORM` switch; that branch was removed
-to keep the examples honest about what runs where. If MediaKit ships on BytePlus, a
-`byteplus/` tree will come back.
+Keys do not cross clouds, so each example is one cloud end to end: one account, one console,
+two keys (`ARK_API_KEY` for ModelArk, `MEDIAKIT_API_KEY` for MediaKit). The BytePlus tool
+list above is what the service answered on 2026-08-26, not a doc claim; the BytePlus docs only
+list enhancement, erasure, blurring, frame extraction, highlight clipping, scene segmentation,
+transcoding, remuxing, trim, audio concat/extract/mix/merge, speed, volume/fade and voice
+separation.
 
 ## Repository layout
 
@@ -50,9 +58,13 @@ volcengine/
   mediakit-cli/
     seedance-short-film/   # LLM screenplay -> Seedream characters -> Seedance 2.5 480p clips
                            # -> MediaKit enhance-video 1080p -> MediaKit concat-video
+byteplus/
+  mediakit-cli/
+    seedance-short-film/   # same film on BytePlus: enhance-video from the Seedance URLs,
+                           # stitched locally (BytePlus has no concat-video / upload tool)
 ```
 
-- **platform** — `volcengine` (the only one MediaKit runs on today).
+- **platform** — `volcengine` or `byteplus`.
 - **surface** — how MediaKit is driven: `mediakit-cli` today; SDK / MCP later.
 - **usage** — the workflow the example demonstrates.
 
@@ -61,6 +73,7 @@ volcengine/
 | Example | What it shows | Verified live |
 | --- | --- | --- |
 | [`volcengine/mediakit-cli/seedance-short-film`](volcengine/mediakit-cli/seedance-short-film) | A coherent ≥60 s short film: an LLM writes a 4-shot screenplay, Seedream renders consistent character sheets, Seedance 2.5 generates 4 × 24 s clips at 480p from them, MediaKit upscales each clip to 1080p and stitches them. Resumable, with every request body inspectable via `--dry-run`. | Yes — end to end on Volcano Engine (2026-08-25/26): LLM, Seedream, 4 × 24 s Seedance 2.5 clips, MediaKit enhance to 1080p, MediaKit cloud concat; audio preserved throughout. Figures in its README. |
+| [`byteplus/mediakit-cli/seedance-short-film`](byteplus/mediakit-cli/seedance-short-film) | The same pipeline on BytePlus: BytePlus ModelArk (`dreamina-seedance-2-5`, `dola-seedream-5-0-pro`) for the film, BytePlus AI MediaKit `enhance-video` fed the Seedance clip URLs directly, and `mediakit-cli --local` (ffmpeg) for the stitch. | Yes — end to end on BytePlus (2026-08-26): LLM, Seedream, 4 × 24 s Seedance 2.5 clips, MediaKit enhance to 1080p from URLs, local concat; audio preserved throughout. Figures in its README. |
 
 ## Conventions
 

@@ -1,0 +1,25 @@
+{
+  "id": "cgt-20260826103726-qpt49",
+  "model": "dreamina-seedance-2-5-260628",
+  "status": "succeeded",
+  "content": {
+    "video_url": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dreamina-seedance-2-5/3000087581/Video/94tpq-62730162806202-tgc_fed6542d4b8a0cffff00000000000000000000841948117787120/cgt-20260826103726-qpt49.mp4"
+  },
+  "usage": {
+    "completion_tokens": 230980,
+    "total_tokens": 230980
+  },
+  "created_at": 1787711849,
+  "updated_at": 1787712157,
+  "seed": 41437,
+  "resolution": "480p",
+  "ratio": "16:9",
+  "duration": 24,
+  "framespersecond": 24,
+  "service_tier": "default",
+  "execution_expires_after": 3600,
+  "generate_audio": true,
+  "draft": false,
+  "priority": 0,
+  "output_format": "mp4"
+}

@@ -1,14 +1,14 @@
 """Endpoints and model ids. Everything here is Volcano Engine (火山引擎).
 
-AI MediaKit — the upscale + stitch half of this example — is a Volcano Engine
-product with a single endpoint and its own key (MEDIAKIT_API_KEY, from
-https://console.volcengine.com/imp/ai-mediakit/settings). It is not offered on
-BytePlus, so the whole example targets Volcano Engine and the Ark half uses the
-cn-beijing ModelArk deployment with the doubao-* model ids.
+AI MediaKit — the upscale + stitch half of this example — is used through its
+Volcano Engine endpoint (the mediakit-cli default) with its own key
+(MEDIAKIT_API_KEY, from https://console.volcengine.com/imp/ai-mediakit/settings).
+Keys do not cross clouds, so the whole example targets Volcano Engine and the Ark
+half uses the cn-beijing ModelArk deployment with the doubao-* model ids.
 
-(BytePlus ModelArk speaks the same Ark API with different model ids —
-dreamina-seedance-2-5-260628, dola-seedream-5-0-pro-260628 — but there is no
-MediaKit endpoint to pair it with, so it is deliberately not wired in here.)
+The BytePlus port (byteplus/mediakit-cli/seedance-short-film) uses the
+ap-southeast ModelArk (dreamina-* / dola-* ids) and the BytePlus MediaKit
+endpoint, which enables fewer tools — see its config.py.
 """
 
 ARK_BASE_URL = "https://ark.cn-beijing.volces.com/api/v3"

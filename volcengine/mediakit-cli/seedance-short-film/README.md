@@ -131,15 +131,17 @@ and have expired anyway (Ark URLs live 24 h); the character sheets, storm design
 were chosen by the LLM from the one-line idea, not by hand; and the MediaKit output is
 1918×1080 because MediaKit preserves the 854:480 source aspect exactly.
 
-## Volcano Engine only
+## Volcano Engine end to end
 
-AI MediaKit is a Volcano Engine product with a single endpoint (`https://amk.cn-beijing.volces.com`)
-and its own key, `MEDIAKIT_API_KEY`, from the
-[AI MediaKit console](https://console.volcengine.com/imp/ai-mediakit/settings). It is not
-available on BytePlus (the nearest thing there is video enhancement inside BytePlus VOD, a
-different API), so this example is Volcano Engine end to end: the LLM, Seedream and Seedance
+This example uses the Volcano Engine deployment of AI MediaKit (`https://amk.cn-beijing.volces.com`,
+the CLI default) with its own key, `MEDIAKIT_API_KEY`, from the
+[AI MediaKit console](https://console.volcengine.com/imp/ai-mediakit/settings). Keys do not
+cross clouds, so the example is Volcano Engine end to end: the LLM, Seedream and Seedance
 calls go to the cn-beijing ModelArk deployment with the `doubao-*` model ids in `config.py`,
-and MediaKit does the post-production. Two keys from one console:
+and MediaKit does the post-production. The BytePlus port lives in
+[`byteplus/mediakit-cli/seedance-short-film`](../../../byteplus/mediakit-cli/seedance-short-film);
+it differs where BytePlus MediaKit differs (no cloud `concat-video`, no local-file upload).
+Two keys from one console:
 
 | Env var | Where from |
 | --- | --- |

@@ -386,7 +386,8 @@ def step_concat(out: Path, state: dict, args) -> None:
         return
     if args.local_concat:
         inputs = [str(out / e["enhance"]["local_path"]) for e in state["shots"]]
-        result = mediakit.concat_video_local(inputs, str(final))
+        # Absolute output path: the CLI resolves a relative --output-path against the inputs' directory.
+        result = mediakit.concat_video_local([str(Path(i).resolve()) for i in inputs], str(final.resolve()))
         if not final.exists():
             raise SystemExit(f"local concat reported success but {final} is missing: {result}")
         state["concat"] = {"mode": "local", "inputs": "local", "input_list": inputs, "completed_at": now_iso(),

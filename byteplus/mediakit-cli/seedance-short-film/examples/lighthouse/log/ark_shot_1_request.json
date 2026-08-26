@@ -1,0 +1,24 @@
+{
+  "model": "dreamina-seedance-2-5-260628",
+  "content": [
+    {
+      "type": "text",
+      "text": "@Image1 is Elias: A sturdy lighthouse keeper in his 50s, with weathered skin, grey-streaked beard, and kind, deep-set eyes, wearing Heavy oilskin coat over a wool sweater, trousers, boots, and a knitted cap; A bright red scarf always around his neck. Keep this exact face, hair and outfit.\nEach referenced person appears exactly once in frame.\nThe keeper lights the lighthouse lamp and spots the living storm on the horizon. Location: Lighthouse lantern room and exterior view, Dusk, overcast sky.\n[0s–8s] @Image1 trims the wick of the great lamp, his red scarf fluttering. Camera slowly dollies from wide shot to medium close-up on his hands.\n[8s–16s] He strikes a match, igniting the lamp; golden light spills across his face. Camera tilts up to capture the beam sweeping out to sea.\n[16s–24s] He peers through the rain-streaked window, spotting a distant swirling mass with faint blue glows. Camera pushes in on his eyes, then over-the-shoulder view of the storm.\nCamera: Wide lens, slow dolly and tilt, shallow depth of field for intimate moments.\nContinuity: Dusk light, golden lamp glow, hero's red scarf and oilskin coat, lighthouse interior with brass and glass.\nAudio: Howling wind, distant thunder, creaking metal, a low cello note. Dialogue: [12s–15s] @Image1 says \"There you are again.\" (Deep and gravelly, with a soft, warm tone.). No subtitles or on-screen text.\nStyle: A painterly, hand-crafted animation style reminiscent of watercolor and ink. The palette is moody: deep blues, grays, and muted golds, with splashes of electric blue for the storm. Soft, diffused lighting with dramatic chiaroscuro. The lighthouse beam cuts through mist. Textures are rough, like cold-pressed paper. Camera moves are slow and fluid, with occasional handheld shakiness during storm sequences. Era is timeless, early 20th-century maritime."
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://ark-acg-ap-southeast-1.tos-ap-southeast-1.volces.com/dola-seedream-5-0-pro/1044589ea9a55d86b92b0b7749409eeedd2636172096117787120/Image/3000087581/0217877116902716362ddeee9049477b0b29b68d55a9ae9854401.png"
+      },
+      "role": "reference_image"
+    }
+  ],
+  "ratio": "16:9",
+  "duration": 24,
+  "resolution": "480p",
+  "generate_audio": true,
+  "omni_reference_task_type": "auto",
+  "output_format": "mp4",
+  "watermark": false,
+  "execution_expires_after": 3600
+}
