@@ -60,7 +60,7 @@ volcengine/
 
 | Example | What it shows | Verified live |
 | --- | --- | --- |
-| [`volcengine/mediakit-cli/seedance-short-film`](volcengine/mediakit-cli/seedance-short-film) | A coherent ≥60 s short film: an LLM writes a 4-shot screenplay, Seedream renders consistent character sheets, Seedance 2.5 generates 4 × 24 s clips at 480p from them, MediaKit upscales each clip to 1080p and stitches them. Resumable, with every request body inspectable via `--dry-run`. | Ark half yes (2026-08-25: LLM, Seedream, 4 × 24 s Seedance 2.5 clips, local concat); MediaKit cloud steps pending a key — see its README |
+| [`volcengine/mediakit-cli/seedance-short-film`](volcengine/mediakit-cli/seedance-short-film) | A coherent ≥60 s short film: an LLM writes a 4-shot screenplay, Seedream renders consistent character sheets, Seedance 2.5 generates 4 × 24 s clips at 480p from them, MediaKit upscales each clip to 1080p and stitches them. Resumable, with every request body inspectable via `--dry-run`. | Yes — end to end on Volcano Engine (2026-08-25/26): LLM, Seedream, 4 × 24 s Seedance 2.5 clips, MediaKit enhance to 1080p, MediaKit cloud concat; audio preserved throughout. Figures in its README. |
 
 ## Conventions
 

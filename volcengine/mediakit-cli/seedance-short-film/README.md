@@ -249,13 +249,15 @@ a retry would be a second billed generation.
    override it.
 9. **Ark JSON mode is not relied on.** The LLM is asked for "JSON only" and the response is
    parsed leniently (fences and surrounding prose are stripped).
-10. **Models may need activating** in the ModelArk console (开通管理) before the first call
+10. **MediaKit keeps the source aspect ratio exactly**: a 854×480 Seedance clip comes back as
+    1918×1080, not 1920×1080. Harmless for concat (all clips match), but worth knowing if a
+    downstream tool insists on 1920.
+11. **Models may need activating** in the ModelArk console (开通管理) before the first call
     returns anything but `InvalidEndpointOrModel.NotFound`.
 
 ## Verification status
 
-Verified **live** on Volcano Engine, 2026-08-25 (Ark half + local concat — see below for what
-is still pending):
+Verified **live, end to end, on Volcano Engine** (Ark on 2026-08-25, MediaKit on 2026-08-26):
 
 - **LLM** (`deepseek-v4-pro-260425`, `/chat/completions`): returns the JSON schema without
   fences; one run needed the automatic repair round (it had written "extends"). 90–150 s per
@@ -270,27 +272,24 @@ is still pending):
   linted prompts; character identity (face, hair, glasses, pendant, coat) held across all four
   clips. A 4 s clip costs 38 830 tokens and ~80 s, which makes
   `--shots 1 --shot-seconds 4 --until shots` a cheap pre-flight.
-- **`mediakit-cli --local editing concat-video`** (`--local-concat`, v0.2.0) over the four
-  clips: ~1 s, `final.mp4` 854×480, 96.29 s, audio kept; the flat result JSON is
-  `{video_url, duration, resolution}` — the same keys the cloud `query-task` schema declares.
+- **MediaKit `enhance-video`** (`--scene aigc --tool-version standard --resolution 1080p
+  --bitrate-level medium`, local 480p file as input): upload + submit ~4 s per clip; the four
+  24 s tasks ran in parallel and all completed **~5 min 20 s** after submission (a 4 s clip took
+  2 min 14 s). Output **1918×1080** (the 854:480 aspect is preserved exactly, so not quite 1920),
+  24 fps, h264 ~6.7 Mbps, **AAC audio preserved**, duration unchanged (24.064 s), 20–23 MB.
+  `query-task` reports `status, video_url, duration, resolution, fps, tool_version`.
+- **MediaKit `concat-video`** over the four enhanced `video_url`s (no transitions): **32 s**,
+  `final.mp4` 1918×1080, **96.17 s**, audio kept, 50 MB. Straight cuts at the joins.
+- **`mediakit-cli --local editing concat-video`** (`--local-concat`) over the raw clips: ~1 s,
+  854×480, 96.29 s, audio kept.
+- Resume behaviour, live: a run finished with `--skip-enhance --local-concat` was re-run
+  without those flags after deleting `final.mp4`; only the four enhances and the cloud concat
+  executed, no Ark call was repeated.
 
-Verified **without** network:
+Verified **without** network: `screenplay.validate()` / `compose_shot_prompt()` /
+forbidden-word lint on a fixture; the resume state machine, `--retry-failed`, partial re-runs —
+with the Ark and MediaKit calls stubbed.
 
-- `screenplay.validate()` / `compose_shot_prompt()` / forbidden-word lint on a fixture; the
-  resume state machine, `--retry-failed`, partial re-runs (`final.mp4` deleted → only concat;
-  `enhanced/shot_2.mp4` deleted → only that upscale) — with the Ark and MediaKit calls stubbed.
-- `mediakit-cli video enhance-video --schema` / `editing concat-video --schema` confirm the
-  flags used here and that a completed task reports `video_url`, `duration`, `resolution`.
-
-**Not yet verified against the live MediaKit cloud API** (no `MEDIAKIT_API_KEY` was available
-when this was written):
-
-- `enhance-video` on AIGC 480p input: output is 1920×1080, duration unchanged, and the
-  **audio track is preserved**. If it is not, the fix is a `mediakit-cli editing
-  mux-audio-video` step with the 480p original's audio.
-- Cloud `concat-video` over the four enhanced URLs (and `--transitions`), MediaKit URL
-  lifetime, `client_token` idempotency semantics.
-
-To finish the verification: export `MEDIAKIT_API_KEY`, delete `runs/<run>/final.mp4`, and
-re-run the same `pipeline.py` command without `--skip-enhance --local-concat`; only the
-enhance and cloud-concat steps will execute.
+**Still taken from the docs, not verified:** MediaKit output URL lifetime (the enhanced URLs
+were consumed within a minute), `client_token` idempotency semantics, and `--transitions`
+(effect on total duration and audio at the joins).
