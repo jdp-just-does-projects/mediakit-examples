@@ -28,6 +28,80 @@ pipeline enforces:
    continuity and audio notes, all linted for the words that would make Seedance 2.5
    reinterpret the request (see [sharp edges](#sharp-edges)).
 
+## Architecture
+
+![Architecture: idea → LLM screenplay → Seedream character sheets → Seedance 2.5 480p clips → MediaKit enhance-video 1080p → MediaKit concat-video → final.mp4](docs/architecture.png)
+
+Purple boxes are local code in this directory, tan cylinders are files written under
+`--out/`, blue boxes are ModelArk API calls made by `ark.py` with `ARK_API_KEY`, and green
+boxes are AI MediaKit cloud tasks submitted through `mediakit-cli` with `MEDIAKIT_API_KEY`.
+Every arrow out of a cloud box is a URL that the pipeline downloads immediately; every
+arrow into one is either a prompt or a file/URL reference. `state.json` records the task id
+behind each cloud box so a re-run re-polls instead of resubmitting (see
+[Resuming](#resuming-and-statejson)).
+
+<details>
+<summary>Mermaid source (rendered above as <code>docs/architecture.png</code>)</summary>
+
+```mermaid
+%%{init: {"flowchart": {"nodeSpacing": 30, "rankSpacing": 40, "curve": "basis", "subGraphTitleMargin": {"top": 6, "bottom": 10}}}}%%
+flowchart TB
+    idea(["--idea &quot;A lighthouse keeper befriends a storm.&quot;"])
+    screenplay["pipeline.py + screenplay.py<br/>validate · lint forbidden words · one repair round<br/>compose_shot_prompt() → @ImageN bindings"]
+
+    subgraph ark["Volcano Engine ModelArk (cn-beijing) · ARK_API_KEY · ark.py"]
+        llm["LLM · deepseek-v4-pro<br/>/chat/completions"]
+        seedream["Seedream 5.0 Pro<br/>/images/generations (sync)"]
+        seedance["Seedance 2.5<br/>/contents/generations/tasks<br/>(submit + poll, 4 tasks)"]
+    end
+
+    sp[("screenplay.json<br/>style_bible · characters[] · shots[]")]
+    chars[("characters/*.png<br/>1536×2048")]
+    shots[("shots/shot_N.mp4<br/>854×480 · 24 s · audio")]
+    cli["mediakit-cli<br/>(mediakit.py subprocess wrapper)"]
+
+    subgraph mk["Volcano Engine AI MediaKit · MEDIAKIT_API_KEY"]
+        enhance["video enhance-video<br/>--scene aigc --resolution 1080p<br/>(4 cloud tasks)"]
+        concat["editing concat-video<br/>(cloud task)"]
+    end
+
+    enhanced[("enhanced/shot_N.mp4<br/>1918×1080")]
+    final[("final.mp4<br/>1080p · ~96 s")]
+
+    idea --> screenplay
+    screenplay -- "system + user prompt" --> llm
+    llm -- "JSON" --> sp
+    sp -- "style bible +<br/>character-sheet prompt" --> seedream
+    seedream -- "PNG URL (24 h)" --> chars
+    sp -- "composed prompt<br/>per shot" --> seedance
+    chars -. "reference_image ×N<br/>(@Image1, @Image2 …)" .-> seedance
+    seedance -- "video_url (24 h)" --> shots
+    shots -- "local 480p file" --> cli
+    cli -- "upload + submit" --> enhance
+    enhance -- "video_url" --> enhanced
+    enhance -- "4 × MediaKit video_url<br/>(no re-upload)" --> concat
+    concat -- "video_url" --> final
+
+
+    classDef store fill:#f4f1ea,stroke:#8a7d5c,color:#222
+    classDef arkc fill:#e6f0ff,stroke:#3b6fd6,color:#111
+    classDef mkc fill:#e8f7ec,stroke:#2e8b57,color:#111
+    classDef code fill:#efeaff,stroke:#6a4fc9,color:#111
+    class sp,chars,shots,enhanced,final store
+    class llm,seedream,seedance arkc
+    class enhance,concat mkc
+    class screenplay,cli code
+```
+
+Regenerate the PNG after editing `docs/architecture.mmd`:
+
+```
+npx -y @mermaid-js/mermaid-cli -i docs/architecture.mmd -o docs/architecture.png \
+    -b white -w 1400 -s 2 -p docs/puppeteer.json
+```
+
+</details>
+
 ## Example output
 
 A complete run is committed under [`examples/lighthouse/`](examples/lighthouse) so you can see
@@ -82,6 +156,7 @@ and MediaKit does the post-production. Two keys from one console:
 | `screenplay.py` | System/user prompts for the LLM, the screenplay JSON schema and validator, one automatic repair round, and `compose_shot_prompt()` which turns a shot into a Seedance prompt with `@ImageN` bindings. |
 | `pipeline.py` | The orchestrator: argparse, `state.json`, five resumable steps, `--dry-run`, `--until`, `--retry-failed`, `--local-concat`. |
 | `requirements.txt` | `requests`. `mediakit-cli` (Node) is an external tool. |
+| `docs/` | `architecture.mmd` (mermaid source), `architecture.png` (its render, embedded above) and the `puppeteer.json` used to regenerate it. |
 
 ## Run it
 

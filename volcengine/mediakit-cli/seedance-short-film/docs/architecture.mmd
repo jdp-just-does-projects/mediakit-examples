@@ -1,0 +1,47 @@
+%%{init: {"flowchart": {"nodeSpacing": 30, "rankSpacing": 40, "curve": "basis", "subGraphTitleMargin": {"top": 6, "bottom": 10}}}}%%
+flowchart TB
+    idea(["--idea &quot;A lighthouse keeper befriends a storm.&quot;"])
+    screenplay["pipeline.py + screenplay.py<br/>validate · lint forbidden words · one repair round<br/>compose_shot_prompt() → @ImageN bindings"]
+
+    subgraph ark["Volcano Engine ModelArk (cn-beijing) · ARK_API_KEY · ark.py"]
+        llm["LLM · deepseek-v4-pro<br/>/chat/completions"]
+        seedream["Seedream 5.0 Pro<br/>/images/generations (sync)"]
+        seedance["Seedance 2.5<br/>/contents/generations/tasks<br/>(submit + poll, 4 tasks)"]
+    end
+
+    sp[("screenplay.json<br/>style_bible · characters[] · shots[]")]
+    chars[("characters/*.png<br/>1536×2048")]
+    shots[("shots/shot_N.mp4<br/>854×480 · 24 s · audio")]
+    cli["mediakit-cli<br/>(mediakit.py subprocess wrapper)"]
+
+    subgraph mk["Volcano Engine AI MediaKit · MEDIAKIT_API_KEY"]
+        enhance["video enhance-video<br/>--scene aigc --resolution 1080p<br/>(4 cloud tasks)"]
+        concat["editing concat-video<br/>(cloud task)"]
+    end
+
+    enhanced[("enhanced/shot_N.mp4<br/>1918×1080")]
+    final[("final.mp4<br/>1080p · ~96 s")]
+
+    idea --> screenplay
+    screenplay -- "system + user prompt" --> llm
+    llm -- "JSON" --> sp
+    sp -- "style bible +<br/>character-sheet prompt" --> seedream
+    seedream -- "PNG URL (24 h)" --> chars
+    sp -- "composed prompt<br/>per shot" --> seedance
+    chars -. "reference_image ×N<br/>(@Image1, @Image2 …)" .-> seedance
+    seedance -- "video_url (24 h)" --> shots
+    shots -- "local 480p file" --> cli
+    cli -- "upload + submit" --> enhance
+    enhance -- "video_url" --> enhanced
+    enhance -- "4 × MediaKit video_url<br/>(no re-upload)" --> concat
+    concat -- "video_url" --> final
+
+
+    classDef store fill:#f4f1ea,stroke:#8a7d5c,color:#222
+    classDef arkc fill:#e6f0ff,stroke:#3b6fd6,color:#111
+    classDef mkc fill:#e8f7ec,stroke:#2e8b57,color:#111
+    classDef code fill:#efeaff,stroke:#6a4fc9,color:#111
+    class sp,chars,shots,enhanced,final store
+    class llm,seedream,seedance arkc
+    class enhance,concat mkc
+    class screenplay,cli code
