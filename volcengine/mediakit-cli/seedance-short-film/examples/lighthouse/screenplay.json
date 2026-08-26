@@ -1,0 +1,207 @@
+{
+  "title": "The Keeper and the Storm",
+  "logline": "A solitary lighthouse keeper befriends a sentient storm that visits his island each night.",
+  "style_bible": "Hand-drawn animation with watercolour textures, reminiscent of a graphic novel. Deep blues, teal, and warm amber light. Soft, diffused lighting with glowing edges. The lighthouse beam cuts through mist. Early 20th century, rustic, isolated. Non-photorealistic, painterly rendering.",
+  "characters": [
+    {
+      "id": "hero",
+      "name": "Eamon",
+      "description": "Elderly man, thin, weathered skin, grey hair cropped short, sharp jaw, kind blue eyes.",
+      "wardrobe": "Heavy wool peacoat, dark blue sweater, worn leather boots.",
+      "distinguishing_feature": "A brass compass on a chain around his neck, always glowing faintly.",
+      "voice": "Gruff but gentle, soft-spoken."
+    },
+    {
+      "id": "storm",
+      "name": "Vael",
+      "description": "Personification of a storm: a swirling vortex of dark clouds, with fleeting, luminous blue eyes and crackling lightning veins.",
+      "wardrobe": "None, just shifting cloud forms.",
+      "distinguishing_feature": "Eyes of lightning that flicker and a constant low rumbling presence.",
+      "voice": "Echoing, layered whispers like wind."
+    }
+  ],
+  "shots": [
+    {
+      "index": 1,
+      "summary": "The lighthouse keeper stands alone on the gallery, lighting the lamp as dusk settles.",
+      "location": "Lighthouse gallery, encircled by iron railing, overlooking a stormy sea.",
+      "time_of_day": "Twilight, fading light.",
+      "characters": [
+        "hero"
+      ],
+      "timeline": [
+        {
+          "start": 0,
+          "end": 8,
+          "action": "Hero climbs the spiral staircase, reaches the lamp room, and begins lighting the wick with a long match."
+        },
+        {
+          "start": 8,
+          "end": 16,
+          "action": "Hero adjusts the Fresnel lens, the beam sweeps across the sea; he then steps out onto the gallery."
+        },
+        {
+          "start": 16,
+          "end": 24,
+          "action": "Hero leans on the railing, gazing at the darkening horizon; wind tugs his coat, and his compass glows."
+        }
+      ],
+      "camera": "Wide-angle lens, slow dolly in from a high angle, then orbit around hero as he lights the lamp, settling on a medium shot from behind.",
+      "continuity": "Amber glow from the lamp, hero's coat flapping, brass compass visible on chain, iron railing wet with mist.",
+      "audio": "Wind howling, distant waves, rhythmic creak of the lighthouse mechanism, soft cello music bed.",
+      "dialogue": [
+        {
+          "character": "hero",
+          "start": 10,
+          "end": 14,
+          "line": "Another night alone."
+        }
+      ],
+      "duration": 24,
+      "seedance_prompt": "@Image1 is Eamon: Elderly man, thin, weathered skin, grey hair cropped short, sharp jaw, kind blue eyes, wearing Heavy wool peacoat, dark blue sweater, worn leather boots; A brass compass on a chain around his neck, always glowing faintly. Keep this exact face, hair and outfit.\nEach referenced person appears exactly once in frame.\nThe lighthouse keeper stands alone on the gallery, lighting the lamp as dusk settles. Location: Lighthouse gallery, encircled by iron railing, overlooking a stormy sea, Twilight, fading light.\n[0s–8s] Hero climbs the spiral staircase, reaches the lamp room, and begins lighting the wick with a long match.\n[8s–16s] Hero adjusts the Fresnel lens, the beam sweeps across the sea; he then steps out onto the gallery.\n[16s–24s] Hero leans on the railing, gazing at the darkening horizon; wind tugs his coat, and his compass glows.\nCamera: Wide-angle lens, slow dolly in from a high angle, then orbit around hero as he lights the lamp, settling on a medium shot from behind.\nContinuity: Amber glow from the lamp, hero's coat flapping, brass compass visible on chain, iron railing wet with mist.\nAudio: Wind howling, distant waves, rhythmic creak of the lighthouse mechanism, soft cello music bed. Dialogue: [10s–14s] @Image1 says \"Another night alone.\" (Gruff but gentle, soft-spoken.). No subtitles or on-screen text.\nStyle: Hand-drawn animation with watercolour textures, reminiscent of a graphic novel. Deep blues, teal, and warm amber light. Soft, diffused lighting with glowing edges. The lighthouse beam cuts through mist. Early 20th century, rustic, isolated. Non-photorealistic, painterly rendering.",
+      "reference_ids": [
+        "hero"
+      ]
+    },
+    {
+      "index": 2,
+      "summary": "The storm arrives, sentient and curious, causing the light to flicker.",
+      "location": "Lighthouse gallery, night.",
+      "time_of_day": "Night, stormy.",
+      "characters": [
+        "hero",
+        "storm"
+      ],
+      "timeline": [
+        {
+          "start": 0,
+          "end": 6,
+          "action": "Hero sees dark clouds churning on the horizon, wind intensifies, and he grips the railing."
+        },
+        {
+          "start": 6,
+          "end": 12,
+          "action": "Storm vortex forms near the lighthouse, sparks of lightning reveal its swirling shape and eyes."
+        },
+        {
+          "start": 12,
+          "end": 18,
+          "action": "Storm reaches out a tendril of cloud toward the lamp, causing the light to flicker erratically."
+        },
+        {
+          "start": 18,
+          "end": 24,
+          "action": "Hero braces against the wind, holding his compass, staring at the sentient storm."
+        }
+      ],
+      "camera": "Static wide shot of the gallery, then quick zoom to the storm's forming face, handheld shake during the tendril reach.",
+      "continuity": "Same gallery, lamp now lit and casting a beam, heavy rain drenching hero's coat, compass glowing brighter.",
+      "audio": "Thunder crashes, storm's rumbling voice, scattered piano notes, lighthouse mechanism groans.",
+      "dialogue": [
+        {
+          "character": "hero",
+          "start": 14,
+          "end": 17,
+          "line": "What are you?"
+        },
+        {
+          "character": "storm",
+          "start": 18,
+          "end": 21,
+          "line": "I am the wind."
+        }
+      ],
+      "duration": 24,
+      "seedance_prompt": "@Image1 is Eamon: Elderly man, thin, weathered skin, grey hair cropped short, sharp jaw, kind blue eyes, wearing Heavy wool peacoat, dark blue sweater, worn leather boots; A brass compass on a chain around his neck, always glowing faintly. Keep this exact face, hair and outfit.\n@Image2 is Vael: Personification of a storm: a swirling vortex of dark clouds, with fleeting, luminous blue eyes and crackling lightning veins, wearing None, just shifting cloud forms; Eyes of lightning that flicker and a constant low rumbling presence. Keep this exact face, hair and outfit.\nEach referenced person appears exactly once in frame.\nThe storm arrives, sentient and curious, causing the light to flicker. Location: Lighthouse gallery, night, Night, stormy.\n[0s–6s] Hero sees dark clouds churning on the horizon, wind intensifies, and he grips the railing.\n[6s–12s] Storm vortex forms near the lighthouse, sparks of lightning reveal its swirling shape and eyes.\n[12s–18s] Storm reaches out a tendril of cloud toward the lamp, causing the light to flicker erratically.\n[18s–24s] Hero braces against the wind, holding his compass, staring at the sentient storm.\nCamera: Static wide shot of the gallery, then quick zoom to the storm's forming face, handheld shake during the tendril reach.\nContinuity: Same gallery, lamp now lit and casting a beam, heavy rain drenching hero's coat, compass glowing brighter.\nAudio: Thunder crashes, storm's rumbling voice, scattered piano notes, lighthouse mechanism groans. Dialogue: [14s–17s] @Image1 says \"What are you?\" (Gruff but gentle, soft-spoken.); [18s–21s] @Image2 says \"I am the wind.\" (Echoing, layered whispers like wind.). No subtitles or on-screen text.\nStyle: Hand-drawn animation with watercolour textures, reminiscent of a graphic novel. Deep blues, teal, and warm amber light. Soft, diffused lighting with glowing edges. The lighthouse beam cuts through mist. Early 20th century, rustic, isolated. Non-photorealistic, painterly rendering.",
+      "reference_ids": [
+        "hero",
+        "storm"
+      ]
+    },
+    {
+      "index": 3,
+      "summary": "The keeper offers his lamp's warmth, and the storm calms.",
+      "location": "Lighthouse gallery, night.",
+      "time_of_day": "Night, but storm clearing.",
+      "characters": [
+        "hero",
+        "storm"
+      ],
+      "timeline": [
+        {
+          "start": 0,
+          "end": 8,
+          "action": "Hero reaches out a hand toward the storm, which recoils slightly, its eyes flickering."
+        },
+        {
+          "start": 8,
+          "end": 16,
+          "action": "Hero opens the lamp housing, warm amber light spills out; storm's tendrils swirl around it, calming."
+        },
+        {
+          "start": 16,
+          "end": 24,
+          "action": "Storm's eyes soften, its form becomes more fluid; hero and storm share a quiet moment."
+        }
+      ],
+      "camera": "Close-up on hero's hand reaching out, then pull back to a two-shot, slow zoom out as the light envelops them.",
+      "continuity": "Light from lamp bathes both, storm's form now less jagged, more fluid, hero's compass is bright, rain begins to abate.",
+      "audio": "Wind subsides, gentle chimes, soft strings, distant thunder rumbles.",
+      "dialogue": [
+        {
+          "character": "hero",
+          "start": 10,
+          "end": 14,
+          "line": "Stay. You're not alone."
+        },
+        {
+          "character": "storm",
+          "start": 16,
+          "end": 18,
+          "line": "Warm..."
+        }
+      ],
+      "duration": 24,
+      "seedance_prompt": "@Image1 is Eamon: Elderly man, thin, weathered skin, grey hair cropped short, sharp jaw, kind blue eyes, wearing Heavy wool peacoat, dark blue sweater, worn leather boots; A brass compass on a chain around his neck, always glowing faintly. Keep this exact face, hair and outfit.\n@Image2 is Vael: Personification of a storm: a swirling vortex of dark clouds, with fleeting, luminous blue eyes and crackling lightning veins, wearing None, just shifting cloud forms; Eyes of lightning that flicker and a constant low rumbling presence. Keep this exact face, hair and outfit.\nEach referenced person appears exactly once in frame.\nThe keeper offers his lamp's warmth, and the storm calms. Location: Lighthouse gallery, night, Night, but storm clearing.\n[0s–8s] Hero reaches out a hand toward the storm, which recoils slightly, its eyes flickering.\n[8s–16s] Hero opens the lamp housing, warm amber light spills out; storm's tendrils swirl around it, calming.\n[16s–24s] Storm's eyes soften, its form becomes more fluid; hero and storm share a quiet moment.\nCamera: Close-up on hero's hand reaching out, then pull back to a two-shot, slow zoom out as the light envelops them.\nContinuity: Light from lamp bathes both, storm's form now less jagged, more fluid, hero's compass is bright, rain begins to abate.\nAudio: Wind subsides, gentle chimes, soft strings, distant thunder rumbles. Dialogue: [10s–14s] @Image1 says \"Stay. You're not alone.\" (Gruff but gentle, soft-spoken.); [16s–18s] @Image2 says \"Warm...\" (Echoing, layered whispers like wind.). No subtitles or on-screen text.\nStyle: Hand-drawn animation with watercolour textures, reminiscent of a graphic novel. Deep blues, teal, and warm amber light. Soft, diffused lighting with glowing edges. The lighthouse beam cuts through mist. Early 20th century, rustic, isolated. Non-photorealistic, painterly rendering.",
+      "reference_ids": [
+        "hero",
+        "storm"
+      ]
+    },
+    {
+      "index": 4,
+      "summary": "The storm departs at dawn, leaving a glowing token on the gallery.",
+      "location": "Lighthouse gallery, dawn.",
+      "time_of_day": "Dawn, calm sea.",
+      "characters": [
+        "hero"
+      ],
+      "timeline": [
+        {
+          "start": 0,
+          "end": 8,
+          "action": "Hero looks at the horizon where the storm dissipates into soft clouds; dawn light breaks."
+        },
+        {
+          "start": 8,
+          "end": 16,
+          "action": "Hero notices a smooth, glowing stone on the railing, left behind by the storm."
+        },
+        {
+          "start": 16,
+          "end": 24,
+          "action": "Hero picks up the stone, smiles, and looks out to sea, compass still glowing."
+        }
+      ],
+      "camera": "Slow pull back, revealing the lighthouse in full, then crane down to hero's hand holding the stone, final wide shot of the calm sea.",
+      "continuity": "Dawn light, golden and pink, hero's coat dry, compass glowing faintly, stone gleams with a soft blue light.",
+      "audio": "Gentle waves, distant seagulls, soft piano motif, a single chime.",
+      "dialogue": [],
+      "duration": 24,
+      "seedance_prompt": "@Image1 is Eamon: Elderly man, thin, weathered skin, grey hair cropped short, sharp jaw, kind blue eyes, wearing Heavy wool peacoat, dark blue sweater, worn leather boots; A brass compass on a chain around his neck, always glowing faintly. Keep this exact face, hair and outfit.\nEach referenced person appears exactly once in frame.\nThe storm departs at dawn, leaving a glowing token on the gallery. Location: Lighthouse gallery, dawn, Dawn, calm sea.\n[0s–8s] Hero looks at the horizon where the storm dissipates into soft clouds; dawn light breaks.\n[8s–16s] Hero notices a smooth, glowing stone on the railing, left behind by the storm.\n[16s–24s] Hero picks up the stone, smiles, and looks out to sea, compass still glowing.\nCamera: Slow pull back, revealing the lighthouse in full, then crane down to hero's hand holding the stone, final wide shot of the calm sea.\nContinuity: Dawn light, golden and pink, hero's coat dry, compass glowing faintly, stone gleams with a soft blue light.\nAudio: Gentle waves, distant seagulls, soft piano motif, a single chime. No subtitles or on-screen text.\nStyle: Hand-drawn animation with watercolour textures, reminiscent of a graphic novel. Deep blues, teal, and warm amber light. Soft, diffused lighting with glowing edges. The lighthouse beam cuts through mist. Early 20th century, rustic, isolated. Non-photorealistic, painterly rendering.",
+      "reference_ids": [
+        "hero"
+      ]
+    }
+  ]
+}

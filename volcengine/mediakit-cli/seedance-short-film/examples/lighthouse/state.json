@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "run_id": "20260825-095821-a-lighthouse-keeper-",
+  "created_at": "2026-08-25T09:58:21+00:00",
+  "ark_base_url": "https://ark.cn-beijing.volces.com/api/v3",
+  "models": {
+    "video": "doubao-seedance-2-5-260628",
+    "image": "doubao-seedream-5-0-pro-260628",
+    "llm": "deepseek-v4-pro-260425"
+  },
+  "config": {
+    "shots": 4,
+    "shot_seconds": 24,
+    "ratio": "16:9",
+    "seedance_resolution": "480p",
+    "enhance_resolution": "1080p",
+    "enhance_scene": "aigc",
+    "enhance_tool_version": "standard",
+    "bitrate_level": "medium",
+    "generate_audio": true,
+    "transitions": []
+  },
+  "idea": "A lighthouse keeper befriends a living storm.",
+  "screenplay_path": "screenplay.json",
+  "characters": {
+    "hero": {
+      "prompt": "Hand-drawn animation with watercolour textures, reminiscent of a graphic novel. Deep blues, teal, and warm amber light. Soft, diffused lighting with glowing edges. The lighthouse beam cuts through mist. Early 20th century, rustic, isolated. Non-photorealistic, painterly rendering. Full-body character reference sheet of Eamon: Elderly man, thin, weathered skin, grey hair cropped short, sharp jaw, kind blue eyes. Wearing Heavy wool peacoat, dark blue sweater, worn leather boots. A brass compass on a chain around his neck, always glowing faintly. Standing, neutral pose, facing camera, arms relaxed, plain seamless studio background, even soft light, single person, whole body in frame, no text, no logo.",
+      "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-pro/d97aac37509c98cf397add15fe10d1e17dd556858700256787120/Image/2123427583/021787652007858655dd71e1d01ef51dda793fc89c90573caa79d.png",
+      "url_issued_at": 1787652077.9507031,
+      "local_path": "characters/hero.png"
+    },
+    "storm": {
+      "prompt": "Hand-drawn animation with watercolour textures, reminiscent of a graphic novel. Deep blues, teal, and warm amber light. Soft, diffused lighting with glowing edges. The lighthouse beam cuts through mist. Early 20th century, rustic, isolated. Non-photorealistic, painterly rendering. Full-body character reference sheet of Vael: Personification of a storm: a swirling vortex of dark clouds, with fleeting, luminous blue eyes and crackling lightning veins. Wearing None, just shifting cloud forms. Eyes of lightning that flicker and a constant low rumbling presence. Standing, neutral pose, facing camera, arms relaxed, plain seamless studio background, even soft light, single person, whole body in frame, no text, no logo.",
+      "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-pro/7b99beb1ebaa442c5498b777cfcadc55121433463870256787120/Image/2123427583/02178765207836433412155cdacfc777b8945c244aabe1beb99b7.png",
+      "url_issued_at": 1787652137.6944258,
+      "local_path": "characters/storm.png"
+    }
+  },
+  "shots": [
+    {
+      "index": 1,
+      "duration": 24,
+      "reference_ids": [
+        "hero"
+      ],
+      "seedance": {
+        "task_id": "cgt-20260825180218-l2jd2",
+        "submitted_at": "2026-08-25T10:02:20+00:00",
+        "status": "succeeded",
+        "attempt": 1,
+        "video_url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-5/2123427583/Video/2dj2l-81208152806202-tgc_81e257e1a771caffff00000000000000000000054041256787120/cgt-20260825180218-l2jd2.mp4",
+        "local_path": "shots/shot_1.mp4"
+      },
+      "enhance": {
+        "task_id": "amk-tool-enhance-video-1043516301570",
+        "client_token": "20260825-095821-a-lighthouse-keeper--enh-1",
+        "submitted_at": "2026-08-26T00:35:48+00:00",
+        "status": "completed",
+        "attempt": 1,
+        "source": "runs/lighthouse/shots/shot_1.mp4",
+        "video_url": "https://2131122974-amk-2123427583-default-939598.vod.cn-north-1.volcvideo.com/11be4bbc7ad54108b7e7d321c640e2e0",
+        "completed_at": "2026-08-26T00:41:06+00:00",
+        "duration": 24.065,
+        "resolution": "1080p",
+        "local_path": "enhanced/shot_1.mp4"
+      }
+    },
+    {
+      "index": 2,
+      "duration": 24,
+      "reference_ids": [
+        "hero",
+        "storm"
+      ],
+      "seedance": {
+        "task_id": "cgt-20260825180221-wxrgf",
+        "submitted_at": "2026-08-25T10:02:27+00:00",
+        "status": "succeeded",
+        "attempt": 1,
+        "video_url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-5/2123427583/Video/fgrxw-12208152806202-tgc_429d5e16a141caffff00000000000000000000715741256787120/cgt-20260825180221-wxrgf.mp4",
+        "local_path": "shots/shot_2.mp4"
+      },
+      "enhance": {
+        "task_id": "amk-tool-enhance-video-881561175810",
+        "client_token": "20260825-095821-a-lighthouse-keeper--enh-2",
+        "submitted_at": "2026-08-26T00:35:52+00:00",
+        "status": "completed",
+        "attempt": 1,
+        "source": "runs/lighthouse/shots/shot_2.mp4",
+        "video_url": "https://2131122974-amk-2123427583-default-939598.vod.cn-north-1.volcvideo.com/7f3af101722341b78156557732da6e7d",
+        "completed_at": "2026-08-26T00:41:11+00:00",
+        "duration": 24.065,
+        "resolution": "1080p",
+        "local_path": "enhanced/shot_2.mp4"
+      }
+    },
+    {
+      "index": 3,
+      "duration": 24,
+      "reference_ids": [
+        "hero",
+        "storm"
+      ],
+      "seedance": {
+        "task_id": "cgt-20260825180228-f8zb2",
+        "submitted_at": "2026-08-25T10:02:34+00:00",
+        "status": "succeeded",
+        "attempt": 1,
+        "video_url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-5/2123427583/Video/2bz8f-82208152806202-tgc_66a0256dc191caffff00000000000000000000211451256787120/cgt-20260825180228-f8zb2.mp4",
+        "local_path": "shots/shot_3.mp4"
+      },
+      "enhance": {
+        "task_id": "amk-tool-enhance-video-944890853122",
+        "client_token": "20260825-095821-a-lighthouse-keeper--enh-3",
+        "submitted_at": "2026-08-26T00:35:57+00:00",
+        "status": "completed",
+        "attempt": 1,
+        "source": "runs/lighthouse/shots/shot_3.mp4",
+        "video_url": "https://2131122974-amk-2123427583-default-939598.vod.cn-north-1.volcvideo.com/e15c649d867f4340bcfa15d6838ae440",
+        "completed_at": "2026-08-26T00:41:15+00:00",
+        "duration": 24.065,
+        "resolution": "1080p",
+        "local_path": "enhanced/shot_3.mp4"
+      }
+    },
+    {
+      "index": 4,
+      "duration": 24,
+      "reference_ids": [
+        "hero"
+      ],
+      "seedance": {
+        "task_id": "cgt-20260825180234-dq9nb",
+        "submitted_at": "2026-08-25T10:02:36+00:00",
+        "status": "succeeded",
+        "attempt": 1,
+        "video_url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-5/2123427583/Video/bn9qd-43208152806202-tgc_ecfe5405f771caffff00000000000000000000718651256787120/cgt-20260825180234-dq9nb.mp4",
+        "local_path": "shots/shot_4.mp4"
+      },
+      "enhance": {
+        "task_id": "amk-tool-enhance-video-959083495682",
+        "client_token": "20260825-095821-a-lighthouse-keeper--enh-4",
+        "submitted_at": "2026-08-26T00:36:01+00:00",
+        "status": "completed",
+        "attempt": 1,
+        "source": "runs/lighthouse/shots/shot_4.mp4",
+        "video_url": "https://2131122974-amk-2123427583-default-939598.vod.cn-north-1.volcvideo.com/cb72889ac1cb4d2d93f7c4dfb0f65383",
+        "completed_at": "2026-08-26T00:41:19+00:00",
+        "duration": 24.065,
+        "resolution": "1080p",
+        "local_path": "enhanced/shot_4.mp4"
+      }
+    }
+  ],
+  "concat": {
+    "task_id": "amk-tool-concat-video-904893642242",
+    "client_token": "20260825-095821-a-lighthouse-keeper--concat",
+    "submitted_at": "2026-08-26T00:41:23+00:00",
+    "status": "completed",
+    "attempt": 1,
+    "inputs": "url",
+    "input_list": [
+      "https://2131122974-amk-2123427583-default-939598.vod.cn-north-1.volcvideo.com/11be4bbc7ad54108b7e7d321c640e2e0",
+      "https://2131122974-amk-2123427583-default-939598.vod.cn-north-1.volcvideo.com/7f3af101722341b78156557732da6e7d",
+      "https://2131122974-amk-2123427583-default-939598.vod.cn-north-1.volcvideo.com/e15c649d867f4340bcfa15d6838ae440",
+      "https://2131122974-amk-2123427583-default-939598.vod.cn-north-1.volcvideo.com/cb72889ac1cb4d2d93f7c4dfb0f65383"
+    ],
+    "video_url": "https://2131122974-amk-2123427583-default-939598.vod.cn-north-1.volcvideo.com/d0af4af8-0d2b-48eb-89aa-4df9d7c50145.mp4",
+    "completed_at": "2026-08-26T00:41:55+00:00",
+    "duration": 96.168,
+    "resolution": "1080p",
+    "local_path": "final.mp4"
+  },
+  "steps_done": [
+    "screenplay",
+    "characters",
+    "shots",
+    "enhance",
+    "concat"
+  ],
+  "title": "The Keeper and the Storm"
+}

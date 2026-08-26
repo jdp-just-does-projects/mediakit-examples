@@ -220,3 +220,6 @@ __marimo__/
 # Pipeline outputs (paid generations — keep out of git)
 runs/
 *.mp4
+
+# ...except the committed sample run under examples/
+!**/examples/**/*.mp4

@@ -28,6 +28,35 @@ pipeline enforces:
    continuity and audio notes, all linted for the words that would make Seedance 2.5
    reinterpret the request (see [sharp edges](#sharp-edges)).
 
+## Example output
+
+A complete run is committed under [`examples/lighthouse/`](examples/lighthouse) so you can see
+every intermediate artifact without spending anything. It was produced by
+
+```
+python pipeline.py --idea "A lighthouse keeper befriends a living storm." --out runs/lighthouse
+```
+
+with the defaults (4 shots × 24 s, 16:9, Seedance 480p → MediaKit 1080p, audio on).
+
+![Four enhanced shots](examples/lighthouse/contact_sheet.jpg)
+
+| Path | What it is | Size |
+| --- | --- | --- |
+| `final.mp4` | The finished film: MediaKit `concat-video` over the four enhanced clips. 1918×1080, 96 s, AAC audio. | 48 MB |
+| `enhanced/shot_1..4.mp4` | The four clips after MediaKit `enhance-video` (`--scene aigc`, 1080p). | 20–23 MB each |
+| `shots/shot_1..4.mp4` | The raw Seedance 2.5 clips, 854×480, 24 s each, as generated. | 12–17 MB each |
+| `characters/hero.png`, `characters/storm.png` | The Seedream 5.0 Pro character sheets (1536×2048) attached to every shot as `@Image1` / `@Image2`. Preview: `characters.jpg`. | ~5 MB each |
+| `screenplay.json` | The LLM's screenplay, with the composed `seedance_prompt` and `reference_ids` per shot — the exact text each Seedance task received. | |
+| `state.json` | The resume state: task ids, statuses, timestamps, MediaKit `client_token`s. | |
+| `log/ark_shot_N_request.json` / `_result.json` | The Seedance request body and the terminal task record (status, usage, seed, resolution) for each shot. | |
+| `log/mediakit_enhance_N.json`, `log/mediakit_concat_final.json` | The completed `query-task` JSON for each MediaKit task. | |
+
+Notes on the sample: URLs inside the logs and state had their signed query strings stripped
+and have expired anyway (Ark URLs live 24 h); the character sheets, storm design and palette
+were chosen by the LLM from the one-line idea, not by hand; and the MediaKit output is
+1918×1080 because MediaKit preserves the 854:480 source aspect exactly.
+
 ## Volcano Engine only
 
 AI MediaKit is a Volcano Engine product with a single endpoint (`https://amk.cn-beijing.volces.com`)

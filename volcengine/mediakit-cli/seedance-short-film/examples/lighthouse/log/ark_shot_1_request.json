@@ -1,0 +1,24 @@
+{
+  "model": "doubao-seedance-2-5-260628",
+  "content": [
+    {
+      "type": "text",
+      "text": "@Image1 is Eamon: Elderly man, thin, weathered skin, grey hair cropped short, sharp jaw, kind blue eyes, wearing Heavy wool peacoat, dark blue sweater, worn leather boots; A brass compass on a chain around his neck, always glowing faintly. Keep this exact face, hair and outfit.\nEach referenced person appears exactly once in frame.\nThe lighthouse keeper stands alone on the gallery, lighting the lamp as dusk settles. Location: Lighthouse gallery, encircled by iron railing, overlooking a stormy sea, Twilight, fading light.\n[0s–8s] Hero climbs the spiral staircase, reaches the lamp room, and begins lighting the wick with a long match.\n[8s–16s] Hero adjusts the Fresnel lens, the beam sweeps across the sea; he then steps out onto the gallery.\n[16s–24s] Hero leans on the railing, gazing at the darkening horizon; wind tugs his coat, and his compass glows.\nCamera: Wide-angle lens, slow dolly in from a high angle, then orbit around hero as he lights the lamp, settling on a medium shot from behind.\nContinuity: Amber glow from the lamp, hero's coat flapping, brass compass visible on chain, iron railing wet with mist.\nAudio: Wind howling, distant waves, rhythmic creak of the lighthouse mechanism, soft cello music bed. Dialogue: [10s–14s] @Image1 says \"Another night alone.\" (Gruff but gentle, soft-spoken.). No subtitles or on-screen text.\nStyle: Hand-drawn animation with watercolour textures, reminiscent of a graphic novel. Deep blues, teal, and warm amber light. Soft, diffused lighting with glowing edges. The lighthouse beam cuts through mist. Early 20th century, rustic, isolated. Non-photorealistic, painterly rendering."
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-pro/d97aac37509c98cf397add15fe10d1e17dd556858700256787120/Image/2123427583/021787652007858655dd71e1d01ef51dda793fc89c90573caa79d.png"
+      },
+      "role": "reference_image"
+    }
+  ],
+  "ratio": "16:9",
+  "duration": 24,
+  "resolution": "480p",
+  "generate_audio": true,
+  "omni_reference_task_type": "auto",
+  "output_format": "mp4",
+  "watermark": false,
+  "execution_expires_after": 3600
+}

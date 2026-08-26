@@ -1,0 +1,31 @@
+{
+  "model": "doubao-seedance-2-5-260628",
+  "content": [
+    {
+      "type": "text",
+      "text": "@Image1 is Eamon: Elderly man, thin, weathered skin, grey hair cropped short, sharp jaw, kind blue eyes, wearing Heavy wool peacoat, dark blue sweater, worn leather boots; A brass compass on a chain around his neck, always glowing faintly. Keep this exact face, hair and outfit.\n@Image2 is Vael: Personification of a storm: a swirling vortex of dark clouds, with fleeting, luminous blue eyes and crackling lightning veins, wearing None, just shifting cloud forms; Eyes of lightning that flicker and a constant low rumbling presence. Keep this exact face, hair and outfit.\nEach referenced person appears exactly once in frame.\nThe keeper offers his lamp's warmth, and the storm calms. Location: Lighthouse gallery, night, Night, but storm clearing.\n[0s–8s] Hero reaches out a hand toward the storm, which recoils slightly, its eyes flickering.\n[8s–16s] Hero opens the lamp housing, warm amber light spills out; storm's tendrils swirl around it, calming.\n[16s–24s] Storm's eyes soften, its form becomes more fluid; hero and storm share a quiet moment.\nCamera: Close-up on hero's hand reaching out, then pull back to a two-shot, slow zoom out as the light envelops them.\nContinuity: Light from lamp bathes both, storm's form now less jagged, more fluid, hero's compass is bright, rain begins to abate.\nAudio: Wind subsides, gentle chimes, soft strings, distant thunder rumbles. Dialogue: [10s–14s] @Image1 says \"Stay. You're not alone.\" (Gruff but gentle, soft-spoken.); [16s–18s] @Image2 says \"Warm...\" (Echoing, layered whispers like wind.). No subtitles or on-screen text.\nStyle: Hand-drawn animation with watercolour textures, reminiscent of a graphic novel. Deep blues, teal, and warm amber light. Soft, diffused lighting with glowing edges. The lighthouse beam cuts through mist. Early 20th century, rustic, isolated. Non-photorealistic, painterly rendering."
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-pro/d97aac37509c98cf397add15fe10d1e17dd556858700256787120/Image/2123427583/021787652007858655dd71e1d01ef51dda793fc89c90573caa79d.png"
+      },
+      "role": "reference_image"
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-pro/7b99beb1ebaa442c5498b777cfcadc55121433463870256787120/Image/2123427583/02178765207836433412155cdacfc777b8945c244aabe1beb99b7.png"
+      },
+      "role": "reference_image"
+    }
+  ],
+  "ratio": "16:9",
+  "duration": 24,
+  "resolution": "480p",
+  "generate_audio": true,
+  "omni_reference_task_type": "auto",
+  "output_format": "mp4",
+  "watermark": false,
+  "execution_expires_after": 3600
+}

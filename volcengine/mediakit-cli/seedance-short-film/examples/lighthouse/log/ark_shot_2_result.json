@@ -1,0 +1,25 @@
+{
+  "id": "cgt-20260825180221-wxrgf",
+  "model": "doubao-seedance-2-5-260628",
+  "status": "succeeded",
+  "content": {
+    "video_url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-5/2123427583/Video/fgrxw-12208152806202-tgc_429d5e16a141caffff00000000000000000000715741256787120/cgt-20260825180221-wxrgf.mp4"
+  },
+  "usage": {
+    "completion_tokens": 230980,
+    "total_tokens": 230980
+  },
+  "created_at": 1787652147,
+  "updated_at": 1787652309,
+  "seed": 98243,
+  "resolution": "480p",
+  "ratio": "16:9",
+  "duration": 24,
+  "framespersecond": 24,
+  "service_tier": "default",
+  "execution_expires_after": 3600,
+  "generate_audio": true,
+  "draft": false,
+  "priority": 0,
+  "output_format": "mp4"
+}

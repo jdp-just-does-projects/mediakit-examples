@@ -1,0 +1,24 @@
+{
+  "model": "doubao-seedance-2-5-260628",
+  "content": [
+    {
+      "type": "text",
+      "text": "@Image1 is Eamon: Elderly man, thin, weathered skin, grey hair cropped short, sharp jaw, kind blue eyes, wearing Heavy wool peacoat, dark blue sweater, worn leather boots; A brass compass on a chain around his neck, always glowing faintly. Keep this exact face, hair and outfit.\nEach referenced person appears exactly once in frame.\nThe storm departs at dawn, leaving a glowing token on the gallery. Location: Lighthouse gallery, dawn, Dawn, calm sea.\n[0s–8s] Hero looks at the horizon where the storm dissipates into soft clouds; dawn light breaks.\n[8s–16s] Hero notices a smooth, glowing stone on the railing, left behind by the storm.\n[16s–24s] Hero picks up the stone, smiles, and looks out to sea, compass still glowing.\nCamera: Slow pull back, revealing the lighthouse in full, then crane down to hero's hand holding the stone, final wide shot of the calm sea.\nContinuity: Dawn light, golden and pink, hero's coat dry, compass glowing faintly, stone gleams with a soft blue light.\nAudio: Gentle waves, distant seagulls, soft piano motif, a single chime. No subtitles or on-screen text.\nStyle: Hand-drawn animation with watercolour textures, reminiscent of a graphic novel. Deep blues, teal, and warm amber light. Soft, diffused lighting with glowing edges. The lighthouse beam cuts through mist. Early 20th century, rustic, isolated. Non-photorealistic, painterly rendering."
+    },
+    {
+      "type": "image_url",
+      "image_url": {
+        "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-pro/d97aac37509c98cf397add15fe10d1e17dd556858700256787120/Image/2123427583/021787652007858655dd71e1d01ef51dda793fc89c90573caa79d.png"
+      },
+      "role": "reference_image"
+    }
+  ],
+  "ratio": "16:9",
+  "duration": 24,
+  "resolution": "480p",
+  "generate_audio": true,
+  "omni_reference_task_type": "auto",
+  "output_format": "mp4",
+  "watermark": false,
+  "execution_expires_after": 3600
+}
